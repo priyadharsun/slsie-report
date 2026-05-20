@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SLSIE — System Report</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5pt; color: #1e293b; background: #fff; }
+
+/* ── PRINT BUTTON ── */
+.no-print { text-align:center; padding:16px; background:#f1f5f9; border-bottom:1px solid #e2e8f0; }
+.print-btn { background:#1F4E79; color:#fff; border:none; padding:11px 30px; border-radius:8px; font-size:11pt; font-weight:700; cursor:pointer; }
+.print-btn:hover { background:#2E75B6; }
+
+/* ── COVER ── */
+.cover {
+  background: linear-gradient(135deg,#1F4E79 0%,#2E75B6 55%,#1d4ed8 100%);
+  color:#fff; padding:60px 60px 48px; page-break-after:always;
+  display:flex; flex-direction:column; justify-content:space-between; min-height:100vh;
+}
+.cover-org { font-size:8pt; opacity:.65; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; }
+.cover-title { font-size:32pt; font-weight:900; line-height:1.15; margin-bottom:14px; }
+.cover-sub { font-size:12pt; opacity:.82; line-height:1.55; max-width:620px; margin-bottom:36px; }
+.cover-pills { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:44px; }
+.cover-pill { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25); border-radius:20px; padding:5px 16px; font-size:8.5pt; }
+.cover-footer { border-top:1px solid rgba(255,255,255,.2); padding-top:14px; font-size:8.5pt; opacity:.6; display:flex; justify-content:space-between; }
+
+/* ── LAYOUT ── */
+.wrap { padding:36px 54px 54px; max-width:1000px; margin:0 auto; }
+.page-break { page-break-before:always; }
+.section-num { font-size:7.5pt; font-weight:800; color:#2E75B6; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:4px; margin-top:40px; }
+h2 { font-size:14pt; font-weight:800; color:#1F4E79; margin-bottom:14px; padding-bottom:8px; border-bottom:2.5px solid #1F4E79; }
+h3 { font-size:11pt; font-weight:700; color:#2E75B6; margin:18px 0 8px; }
+p { line-height:1.7; margin-bottom:10px; color:#334155; }
+
+/* ── VALUE CARDS ── */
+.value-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0 20px; }
+.value-card { background:#f8faff; border:1.5px solid #dbeafe; border-radius:10px; padding:14px 16px; }
+.value-card .vc-icon { font-size:1.4rem; margin-bottom:6px; }
+.value-card .vc-title { font-size:9.5pt; font-weight:700; color:#1F4E79; margin-bottom:4px; }
+.value-card .vc-body { font-size:9pt; color:#475569; line-height:1.55; }
+
+/* ── COMPONENT PREVIEW WRAPPER ── */
+.preview-wrap {
+  border:1.5px solid #cbd5e1; border-radius:12px; overflow:hidden;
+  margin:16px 0 20px; box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+.preview-bar {
+  background:#f1f5f9; border-bottom:1px solid #e2e8f0;
+  padding:8px 14px; display:flex; align-items:center; gap:8px;
+}
+.preview-dot { width:10px; height:10px; border-radius:50%; }
+.preview-url { font-size:8pt; color:#94a3b8; margin-left:8px; font-family:monospace; }
+
+/* ── SIDEBAR MINI ── */
+.app-shell { display:flex; height:auto; min-height:360px; }
+.mini-sidebar {
+  width:180px; background:#0f2137; color:#fff; padding:16px 12px; flex-shrink:0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.ms-logo { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+.ms-logo-icon { width:30px; height:30px; background:linear-gradient(135deg,#2E75B6,#1d4ed8); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.9rem; }
+.ms-logo-title { font-size:.8rem; font-weight:800; }
+.ms-logo-sub { font-size:.6rem; opacity:.5; }
+.ms-label { font-size:.55rem; opacity:.45; letter-spacing:1px; text-transform:uppercase; margin:10px 0 4px; }
+.ms-item { padding:7px 10px; border-radius:7px; font-size:.72rem; display:flex; align-items:center; gap:8px; cursor:pointer; color:rgba(255,255,255,.65); }
+.ms-item.active { background:rgba(46,117,182,.35); color:#fff; }
+.ms-item:hover { background:rgba(255,255,255,.07); }
+.ms-badge { margin-left:auto; background:#2E75B6; color:#fff; font-size:.55rem; padding:1px 6px; border-radius:8px; }
+
+/* ── MAIN CONTENT ── */
+.mini-main { flex:1; display:flex; flex-direction:column; background:#f8fafc; }
+.mini-topbar {
+  background:#fff; border-bottom:1px solid #e2e8f0;
+  padding:10px 16px; display:flex; justify-content:space-between; align-items:center;
+}
+.mini-topbar .tb-left { font-size:.75rem; color:#64748b; }
+.mini-topbar .tb-right { display:flex; align-items:center; gap:10px; }
+.live-dot { display:inline-flex; align-items:center; gap:4px; font-size:.65rem; color:#15803d; background:#dcfce7; padding:2px 8px; border-radius:10px; }
+.mini-content { padding:16px; flex:1; }
+
+/* ── KPI CARDS ── */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+.kpi-card { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:12px; }
+.kpi-val { font-size:1.4rem; font-weight:800; color:#1F4E79; line-height:1; }
+.kpi-label { font-size:.65rem; color:#64748b; margin-top:4px; }
+.kpi-card.green .kpi-val { color:#15803d; }
+.kpi-card.amber .kpi-val { color:#b45309; }
+.kpi-card.red .kpi-val { color:#b91c1c; }
+
+/* ── SCORE BADGES ── */
+.score-badge { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:10px; font-size:.68rem; font-weight:700; }
+.score-green { background:#dcfce7; color:#15803d; }
+.score-amber { background:#fef3c7; color:#b45309; }
+.score-red { background:#fee2e2; color:#b91c1c; }
+.score-grey { background:#f1f5f9; color:#64748b; }
+.grade-a { background:#1d4ed8; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:800; }
+.grade-b { background:#b45309; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:800; }
+.grade-c { background:#64748b; color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:800; }
+
+/* ── MINI TABLE ── */
+.mini-table { width:100%; border-collapse:collapse; font-size:.7rem; background:#fff; }
+.mini-table thead th { background:#1F4E79; color:#fff; padding:5px 8px; text-align:left; font-size:.62rem; }
+.mini-table tbody td { border-bottom:1px solid #f1f5f9; padding:5px 8px; }
+.mini-table tbody tr:nth-child(even) td { background:#f8faff; }
+
+/* ── PANEL ── */
+.mini-panel { background:#fff; border:1px solid #e2e8f0; border-radius:8px; overflow:hidden; margin-bottom:10px; }
+.mini-panel-hdr { padding:8px 12px; border-bottom:1px solid #f1f5f9; font-size:.72rem; font-weight:700; color:#1F4E79; display:flex; justify-content:space-between; align-items:center; }
+.mini-panel-body { padding:10px 12px; }
+
+/* ── COMP CHECK ── */
+.comp-check { display:flex; align-items:center; gap:8px; padding:5px 0; border-bottom:1px solid #f8fafc; font-size:.68rem; }
+.comp-check:last-child { border-bottom:none; }
+.cc-pass { color:#15803d; font-size:.85rem; }
+.cc-fail { color:#b91c1c; font-size:.85rem; }
+.cc-label { font-weight:600; }
+.cc-sub { color:#94a3b8; font-size:.6rem; }
+
+/* ── ATHLETE HEADER ── */
+.ath-header { background:linear-gradient(135deg,#1F4E79,#2E75B6); color:#fff; padding:14px; border-radius:8px; display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.ath-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.8rem; flex-shrink:0; }
+.ath-name { font-size:.9rem; font-weight:800; }
+.ath-meta { font-size:.65rem; opacity:.8; }
+.acwr-val { font-size:1.2rem; font-weight:900; color:#ef4444; }
+.acwr-ok { color:#22c55e; }
+
+/* ── ACWR BAR ── */
+.load-bar { height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden; margin:4px 0; }
+.load-fill { height:100%; border-radius:3px; }
+
+/* ── AI PANEL ── */
+.ai-panel { background:linear-gradient(135deg,#eff6ff,#f5f3ff); border:1.5px solid #c7d2fe; border-radius:10px; padding:14px; margin-top:8px; }
+.ai-panel-hdr { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.ai-icon { width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#1d4ed8,#7c3aed); display:flex; align-items:center; justify-content:center; color:#fff; font-size:.7rem; flex-shrink:0; }
+.ai-label { font-size:.62rem; font-weight:800; color:#1d4ed8; text-transform:uppercase; letter-spacing:.4px; }
+.ai-text { font-size:.68rem; line-height:1.6; color:#1e3a5f; }
+.ai-text strong { color:#1d4ed8; }
+
+/* ── CHATBOT ── */
+.chatbot-preview { width:320px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,.12); }
+.chat-head { background:linear-gradient(135deg,#1d4ed8,#7c3aed); color:#fff; padding:12px 14px; display:flex; align-items:center; gap:8px; }
+.chat-avatar { width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:.8rem; }
+.chat-name { font-size:.78rem; font-weight:700; }
+.chat-status { font-size:.58rem; opacity:.75; }
+.chat-msgs { padding:10px; display:flex; flex-direction:column; gap:8px; background:#f8fafc; }
+.chat-bubble { max-width:85%; padding:8px 11px; border-radius:12px; font-size:.68rem; line-height:1.5; }
+.chat-ai-b { background:#fff; color:#1e293b; border:1px solid #e2e8f0; border-radius:4px 12px 12px 12px; }
+.chat-user-b { background:linear-gradient(135deg,#1d4ed8,#7c3aed); color:#fff; border-radius:12px 4px 12px 12px; align-self:flex-end; }
+.chat-tbl { width:100%; border-collapse:collapse; font-size:.6rem; margin-top:4px; }
+.chat-tbl thead th { background:#1d4ed8; color:#fff; padding:3px 6px; text-align:left; }
+.chat-tbl tbody td { border-bottom:1px solid #e2e8f0; padding:3px 6px; }
+.chat-input-row { padding:8px 10px; border-top:1px solid #f1f5f9; display:flex; gap:6px; }
+.chat-input { flex:1; border:1.5px solid #e2e8f0; border-radius:16px; padding:5px 10px; font-size:.65rem; }
+.chat-send { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,#1d4ed8,#7c3aed); border:none; color:#fff; display:flex; align-items:center; justify-content:center; font-size:.7rem; }
+
+/* ── COMPLIANCE MATRIX ── */
+.comp-grid { display:grid; grid-template-columns:1fr; gap:2px; }
+.comp-row-hdr { display:grid; grid-template-columns:160px repeat(5,1fr) 70px; gap:4px; background:#1F4E79; color:#fff; padding:5px 8px; font-size:.6rem; font-weight:700; border-radius:6px 6px 0 0; }
+.comp-row { display:grid; grid-template-columns:160px repeat(5,1fr) 70px; gap:4px; padding:4px 8px; font-size:.62rem; align-items:center; background:#fff; border-bottom:1px solid #f1f5f9; }
+.comp-row:nth-child(even) { background:#f8faff; }
+.comp-tick { text-align:center; }
+.comp-pass-t { color:#15803d; font-size:.8rem; }
+.comp-fail-t { color:#b91c1c; font-size:.8rem; }
+.comp-score-pill { display:inline-block; padding:1px 7px; border-radius:8px; font-size:.58rem; font-weight:700; }
+.cp-full { background:#dcfce7; color:#15803d; }
+.cp-mid  { background:#fef3c7; color:#b45309; }
+.cp-low  { background:#fee2e2; color:#b91c1c; }
+
+/* ── GOVERNANCE RADAR PLACEHOLDER ── */
+.radar-placeholder { background:linear-gradient(135deg,#f8faff,#eff6ff); border:1px solid #dbeafe; border-radius:8px; height:140px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; color:#2E75B6; }
+.radar-svg { opacity:.4; }
+
+/* ── REPORT PREVIEW ── */
+.report-cover-mini { background:linear-gradient(135deg,#1F4E79,#2E75B6); color:#fff; padding:14px; border-radius:8px 8px 0 0; }
+.report-cover-mini .rc-org { font-size:.58rem; opacity:.65; letter-spacing:.8px; text-transform:uppercase; margin-bottom:4px; }
+.report-cover-mini .rc-title { font-size:.9rem; font-weight:800; }
+.report-cover-mini .rc-meta { font-size:.58rem; opacity:.55; margin-top:4px; }
+.ai-summary-box { background:linear-gradient(135deg,#eff6ff,#f0fdf4); border:1.5px solid #bfdbfe; border-radius:8px; padding:10px 12px; margin:8px 0; display:flex; gap:8px; }
+.ai-sum-icon { width:22px; height:22px; border-radius:50%; background:linear-gradient(135deg,#1d4ed8,#15803d); display:flex; align-items:center; justify-content:center; color:#fff; font-size:.65rem; flex-shrink:0; }
+.ai-sum-label { font-size:.58rem; font-weight:800; color:#1d4ed8; text-transform:uppercase; margin-bottom:3px; }
+.ai-sum-text { font-size:.65rem; color:#1e3a5f; line-height:1.5; }
+
+/* ── EXPORT BUTTONS ── */
+.export-btn-row { display:flex; gap:6px; margin:6px 0; }
+.exp-btn { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:5px; font-size:.62rem; font-weight:700; border:1.5px solid; cursor:pointer; }
+.exp-excel { color:#15803d; border-color:#bbf7d0; background:#fff; }
+.exp-pdf   { color:#b91c1c; border-color:#fecaca; background:#fff; }
+.exp-word  { color:#1d4ed8; border-color:#bfdbfe; background:#fff; }
+
+/* ── INFO BOX ── */
+.info-box { background:#eff6ff; border-left:4px solid #2E75B6; padding:12px 16px; border-radius:0 8px 8px 0; margin:12px 0; font-size:9.5pt; color:#1e3a5f; line-height:1.6; }
+.biz-box { background:linear-gradient(135deg,#f0fdf4,#ecfdf5); border:1.5px solid #bbf7d0; border-radius:10px; padding:14px 18px; margin:14px 0; }
+.biz-box h4 { color:#15803d; font-size:10pt; font-weight:800; margin-bottom:8px; }
+.biz-box ul { padding-left:16px; }
+.biz-box ul li { font-size:9.5pt; color:#166534; margin-bottom:5px; line-height:1.55; }
+
+/* ── ROLE TABLE ── */
+table.rtable { width:100%; border-collapse:collapse; margin:12px 0; font-size:9.5pt; }
+table.rtable thead th { background:#1F4E79; color:#fff; padding:8px 12px; text-align:left; font-size:8.5pt; }
+table.rtable tbody td { border:1px solid #e2e8f0; padding:8px 12px; vertical-align:top; line-height:1.5; }
+table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
+
+/* ── FOOTER ── */
+.doc-footer { margin-top:48px; border-top:1px solid #e2e8f0; padding-top:10px; font-size:8pt; color:#94a3b8; display:flex; justify-content:space-between; }
+
+@media print {
+  .no-print { display:none!important; }
+  @page { margin:1cm 1.2cm; size:A4; }
+  body { font-size:9.5pt; }
+  .cover { min-height:auto; padding:40px; page-break-after:always; }
+  .page-break { page-break-before:always; }
+  .preview-wrap, .mini-panel, .value-card { break-inside:avoid; }
+  h2, h3 { break-after:avoid; }
+  .wrap { padding:20px 32px 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨&nbsp; Save as PDF / Print</button>
+</div>
+
+<!-- ══════════════ COVER ══════════════ -->
+<div class="cover">
+  <div>
+    <div class="cover-org">National Olympic Committee of Sri Lanka · Technology Division</div>
+    <div style="margin-bottom:28px">
+      <div style="font-size:10pt;opacity:.6;margin-bottom:6px">SYSTEM REPORT</div>
+      <div class="cover-title">Sri Lanka Sports<br>Intelligence Ecosystem</div>
+      <div style="font-size:9pt;opacity:.5;margin-top:4px">SLSIE v1.0</div>
+    </div>
+    <div class="cover-sub">A comprehensive overview of the SLSIE platform — covering all system components, their functionality, and their business value for the National Olympic Committee of Sri Lanka and its 34 affiliated sports federations.</div>
+    <div class="cover-pills">
+      <span class="cover-pill">📊 34 Federations</span>
+      <span class="cover-pill">🏃 Athlete Monitoring</span>
+      <span class="cover-pill">⚖️ Gazette Compliance</span>
+      <span class="cover-pill">🤖 AI-Powered</span>
+      <span class="cover-pill">📄 Instant Reports</span>
+      <span class="cover-pill">🔐 Role-Based Access</span>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <span>Prepared: 20 May 2026 &nbsp;|&nbsp; SLSIE Project Team — Everpower</span>
+    <span>Confidential — For NOCSL Internal Distribution</span>
+  </div>
+</div>
+
+<!-- ══════════════ WRAP ══════════════ -->
+<div class="wrap">
+
+<!-- ─── TOC ─── -->
+<div class="section-num">Contents</div>
+<h2>Table of Contents</h2>
+<table class="rtable">
+  <tbody>
+    <tr><td style="width:40px;font-weight:700;color:#1F4E79">01</td><td>Platform Overview & Architecture</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">02</td><td>Login & Role-Based Access Control</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">03</td><td>Dashboard</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">04</td><td>Federations Module</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">05</td><td>Governance Benchmark</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">06</td><td>Compliance & Gazette Module</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">07</td><td>Athletes Module</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">08</td><td>Fit for Life Programme</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">09</td><td>Reports Module</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">10</td><td>AI Assistant Chatbot</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">11</td><td>AI Coaching & Governance Insights</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">12</td><td>Production System Architecture</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">13</td><td>Business Value Summary</td></tr>
+  </tbody>
+</table>
+
+<!-- ─── 01 OVERVIEW ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 01</div>
+<h2>Platform Overview & Architecture</h2>
+
+<p>SLSIE (Sri Lanka Sports Intelligence Ecosystem) is a web-based sports management and intelligence platform purpose-built for the National Olympic Committee of Sri Lanka (NOCSL). It consolidates federation governance, athlete health monitoring, gazette compliance enforcement, AI-powered analytics, and reporting into a single unified system accessible by authorised users from any device.</p>
+
+<div class="value-grid">
+  <div class="value-card">
+    <div class="vc-icon">🏛️</div>
+    <div class="vc-title">34 National Sports Federations</div>
+    <div class="vc-body">All NSFs affiliated to NOCSL managed in one platform — governance scores, compliance status, EC officer registers, and athlete data.</div>
+  </div>
+  <div class="value-card">
+    <div class="vc-icon">🤖</div>
+    <div class="vc-title">Anthropic Claude AI Integration</div>
+    <div class="vc-body">Three AI capabilities — natural language chatbot, athlete coaching insights, and federation governance analysis — powered by Claude Haiku API.</div>
+  </div>
+  <div class="value-card">
+    <div class="vc-icon">⚖️</div>
+    <div class="vc-title">Gazette No. 2437/24 Compliance</div>
+    <div class="vc-body">National Sports Associations Regulations No. 01 of 2025 enforced automatically — grading, term limits, gender quotas, and 5-point compliance checklist.</div>
+  </div>
+  <div class="value-card">
+    <div class="vc-icon">📄</div>
+    <div class="vc-title">6 AI-Enhanced Reports</div>
+    <div class="vc-body">Governance, compliance, athlete risk, performance, Fit for Life, and donor impact reports — generated in seconds with AI executive summaries.</div>
+  </div>
+</div>
+
+<div class="info-box">
+  <strong>Technology Stack:</strong> Node.js v22 · Express.js · SQLite (node:sqlite built-in) · Anthropic Claude API · Bootstrap 5.3 · Chart.js 4.4 · SheetJS · Deployed on Render.com
+</div>
+
+<!-- ─── 02 LOGIN ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 02</div>
+<h2>Login & Role-Based Access Control</h2>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/login.html</span>
+  </div>
+  <div style="background:linear-gradient(135deg,#0f2137,#1F4E79);padding:40px;display:flex;align-items:center;justify-content:center;min-height:260px;">
+    <div style="background:#fff;border-radius:14px;padding:28px 32px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,.25)">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,#1F4E79,#2E75B6);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;margin-bottom:8px">🏆</div>
+        <div style="font-size:1.1rem;font-weight:800;color:#1F4E79">SLSIE</div>
+        <div style="font-size:.7rem;color:#94a3b8">Sri Lanka Sports Intelligence Ecosystem</div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:.72rem;font-weight:600;color:#374151;margin-bottom:4px">Email Address</div>
+        <div style="border:1.5px solid #e2e8f0;border-radius:6px;padding:7px 12px;font-size:.75rem;color:#94a3b8">admin@nocsl.lk</div>
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:.72rem;font-weight:600;color:#374151;margin-bottom:4px">Password</div>
+        <div style="border:1.5px solid #e2e8f0;border-radius:6px;padding:7px 12px;font-size:.75rem;color:#94a3b8">••••••••</div>
+      </div>
+      <div style="background:#1F4E79;color:#fff;text-align:center;padding:9px;border-radius:7px;font-size:.78rem;font-weight:700">Sign In to SLSIE</div>
+    </div>
+  </div>
+</div>
+
+<h3>Five User Roles</h3>
+<table class="rtable">
+  <thead><tr><th>Role</th><th>Access Level</th><th>Key Capabilities</th></tr></thead>
+  <tbody>
+    <tr><td><strong>NOCSL Admin</strong></td><td>Full access — all 34 federations</td><td>All modules, all reports, user management, compliance enforcement</td></tr>
+    <tr><td><strong>Federation Officer</strong></td><td>Own federation only</td><td>Submit governance scores, manage athletes, update compliance data, view own reports</td></tr>
+    <tr><td><strong>Head Coach</strong></td><td>Own federation athletes only</td><td>Log training, record biometrics, view athlete health dashboard</td></tr>
+    <tr><td><strong>Ministry Official</strong></td><td>Read-only — all federations</td><td>View governance, compliance, athletes, generate reports — no data entry</td></tr>
+    <tr><td><strong>Donor / Partner</strong></td><td>Read-only — programme data</td><td>Fit for Life outcomes, donor impact report, high-level programme KPIs</td></tr>
+  </tbody>
+</table>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Prevents unauthorised access — federation officers cannot view competitor federation data</li>
+    <li>Ministry and donors get real-time visibility without requiring manual reports from NOCSL staff</li>
+    <li>Single login per user — no shared spreadsheets or email attachments with sensitive data</li>
+    <li>Audit trail — all data submissions are attributed to the logged-in user and timestamped</li>
+  </ul>
+</div>
+
+<!-- ─── 03 DASHBOARD ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 03</div>
+<h2>Dashboard</h2>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/dashboard</span>
+  </div>
+  <div class="app-shell">
+    <div class="mini-sidebar">
+      <div class="ms-logo">
+        <div class="ms-logo-icon">🏆</div>
+        <div><div class="ms-logo-title">SLSIE</div><div class="ms-logo-sub">Sports Intelligence</div></div>
+      </div>
+      <div class="ms-label">MAIN MENU</div>
+      <div class="ms-item active">📊 Dashboard</div>
+      <div class="ms-item">🏛️ Federations <span class="ms-badge">34</span></div>
+      <div class="ms-item">📈 Governance Benchmark</div>
+      <div class="ms-item">🛡️ Compliance &amp; Gazette</div>
+      <div class="ms-item">🏃 Athletes</div>
+      <div class="ms-item">❤️ Fit for Life</div>
+      <div class="ms-item">📄 Reports</div>
+      <div class="ms-label">SYSTEM</div>
+      <div class="ms-item">⚙️ Settings</div>
+    </div>
+    <div class="mini-main">
+      <div class="mini-topbar">
+        <div class="tb-left">📍 Dashboard</div>
+        <div class="tb-right">
+          <span class="live-dot">● Live</span>
+          <span style="font-size:.65rem;color:#94a3b8">14 May 2026</span>
+        </div>
+      </div>
+      <div class="mini-content">
+        <div style="font-size:.85rem;font-weight:800;color:#1F4E79;margin-bottom:4px">Good morning, NOCSL Admin</div>
+        <div style="font-size:.65rem;color:#94a3b8;margin-bottom:12px">National Olympic Committee of Sri Lanka — Sports Intelligence Overview</div>
+        <div class="kpi-row">
+          <div class="kpi-card"><div class="kpi-val">34</div><div class="kpi-label">Member Federations</div></div>
+          <div class="kpi-card green"><div class="kpi-val">18</div><div class="kpi-label">Gov. Reports 2025</div></div>
+          <div class="kpi-card amber"><div class="kpi-val">47</div><div class="kpi-label">Athletes Tracked</div></div>
+          <div class="kpi-card red"><div class="kpi-val">4</div><div class="kpi-label">Injury Risk Flags</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="mini-panel">
+            <div class="mini-panel-hdr">Governance Score Distribution</div>
+            <div class="mini-panel-body" style="display:flex;gap:8px;align-items:flex-end;height:60px;padding-bottom:4px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+                <div style="background:#22c55e;width:100%;height:50px;border-radius:3px 3px 0 0"></div>
+                <div style="font-size:.55rem;color:#64748b">Green (8)</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+                <div style="background:#f59e0b;width:100%;height:35px;border-radius:3px 3px 0 0"></div>
+                <div style="font-size:.55rem;color:#64748b">Amber (7)</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+                <div style="background:#ef4444;width:100%;height:20px;border-radius:3px 3px 0 0"></div>
+                <div style="font-size:.55rem;color:#64748b">Red (3)</div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+                <div style="background:#e2e8f0;width:100%;height:28px;border-radius:3px 3px 0 0"></div>
+                <div style="font-size:.55rem;color:#64748b">Pending (16)</div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-panel">
+            <div class="mini-panel-hdr">Compliance Overview</div>
+            <div class="mini-panel-body">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.65rem"><span>Grade A</span><span style="font-weight:700;color:#1d4ed8">6 feds</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.65rem"><span>Grade B</span><span style="font-weight:700;color:#b45309">14 feds</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.65rem"><span>Grade C</span><span style="font-weight:700;color:#64748b">14 feds</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.65rem"><span>Fully Compliant 5/5</span><span style="font-weight:700;color:#15803d">22 feds</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Senior management can assess the health of the entire national sports sector in under 10 seconds</li>
+    <li>Real-time KPI cards eliminate the need for weekly status meetings to gather basic figures</li>
+    <li>Governance score distribution chart immediately highlights where intervention is needed</li>
+    <li>Live injury risk counter ensures no high-risk athlete is overlooked between coaching sessions</li>
+  </ul>
+</div>
+
+<!-- ─── 04 FEDERATIONS ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 04</div>
+<h2>Federations Module</h2>
+
+<p>The Federations module is the central hub for managing all 34 National Sports Federations affiliated with NOCSL. Each federation has a dedicated profile page showing governance performance, compliance status, EC officer register, and all registered athletes.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/federation/1</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="background:linear-gradient(135deg,#1a6b3a,#1a6b3abb);color:#fff;padding:14px;border-radius:10px;display:flex;align-items:center;gap:14px;margin-bottom:12px">
+      <div style="width:44px;height:44px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">🏏</div>
+      <div style="flex:1">
+        <div style="font-size:.95rem;font-weight:800">Sri Lanka Cricket</div>
+        <div style="font-size:.65rem;opacity:.75">Cricket · Est. 1922 · Western Province</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <span class="grade-a">A</span>
+          <span style="font-size:.6rem;opacity:.7">45 clubs · Rs.180M turnover · Compliance 4/5</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <span class="score-badge score-green" style="font-size:.75rem;padding:4px 10px">✓ 4.50</span>
+        <div style="font-size:.6rem;opacity:.65;margin-top:3px">2025 Overall Score</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Governance Dimensions (2025)</div>
+        <div class="mini-panel-body">
+          <div style="font-size:.62rem;display:flex;flex-direction:column;gap:5px">
+            <div style="display:flex;align-items:center;gap:6px"><span style="flex:1;color:#475569">Board Composition</span><div class="load-bar" style="width:60px;flex-shrink:0"><div class="load-fill" style="width:90%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700;min-width:20px">4.5</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="flex:1;color:#475569">Director Skills</span><div class="load-bar" style="width:60px;flex-shrink:0"><div class="load-fill" style="width:84%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700;min-width:20px">4.2</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="flex:1;color:#475569">Strategic Planning</span><div class="load-bar" style="width:60px;flex-shrink:0"><div class="load-fill" style="width:92%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700;min-width:20px">4.6</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="flex:1;color:#475569">Financial Transparency</span><div class="load-bar" style="width:60px;flex-shrink:0"><div class="load-fill" style="width:94%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700;min-width:20px">4.7</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="flex:1;color:#475569">Integrity &amp; Risk</span><div class="load-bar" style="width:60px;flex-shrink:0"><div class="load-fill" style="width:80%;background:#f59e0b"></div></div><span style="color:#b45309;font-weight:700;min-width:20px">4.0</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="flex:1;color:#475569">Culture Score</span><div class="load-bar" style="width:60px;flex-shrink:0"><div class="load-fill" style="width:84%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700;min-width:20px">4.2</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Statutory Compliance Checklist</div>
+        <div class="mini-panel-body">
+          <div class="comp-check"><span class="cc-pass">✔</span><div><div class="cc-label">Annual General Meeting</div><div class="cc-sub">Held: 15 Mar 2025</div></div></div>
+          <div class="comp-check"><span class="cc-pass">✔</span><div><div class="cc-label">Audited Financial Statements</div><div class="cc-sub">Submitted: 10 May 2025</div></div></div>
+          <div class="comp-check"><span class="cc-pass">✔</span><div><div class="cc-label">Strategic Plan</div><div class="cc-sub">Plan 2025 in force</div></div></div>
+          <div class="comp-check"><span class="cc-fail">✘</span><div><div class="cc-label">Gender Quota (≥2 female EC)</div><div class="cc-sub" style="color:#b91c1c">Only 1 female officer — below minimum</div></div></div>
+          <div class="comp-check"><span class="cc-pass">✔</span><div><div class="cc-label">National Championship</div><div class="cc-sub">Held: 20 Apr 2025</div></div></div>
+        </div>
+      </div>
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">EC Officer Register</div>
+        <div class="mini-panel-body" style="padding:6px">
+          <table class="mini-table">
+            <thead><tr><th>Name</th><th>Role</th><th>Term</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>D. Perera</td><td>President</td><td><span class="score-badge score-amber" style="font-size:.55rem">6/8yr</span></td><td><span class="score-badge score-green" style="font-size:.55rem">Active</span></td></tr>
+              <tr><td>K. Silva</td><td>Secretary</td><td><span class="score-badge score-green" style="font-size:.55rem">3/8yr</span></td><td><span class="score-badge score-green" style="font-size:.55rem">Active</span></td></tr>
+              <tr><td>S. Fernando</td><td>Treasurer</td><td><span class="score-badge score-green" style="font-size:.55rem">2/8yr</span></td><td><span class="score-badge score-green" style="font-size:.55rem">Active</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Full federation profile in one screen — eliminates the need to contact federation offices for basic information</li>
+    <li>Grade A/B/C classification enforced automatically from the gazette — no manual grading committee needed</li>
+    <li>Compliance checklist shows exactly which gazette obligations are met and which are outstanding</li>
+    <li>EC Officer term limit tracking prevents illegal office-holding and protects NOCSL from legal liability</li>
+    <li>Disqualification flags from the gazette (criminal convictions, financial misconduct) shown prominently</li>
+  </ul>
+</div>
+
+<!-- ─── 05 GOVERNANCE ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 05</div>
+<h2>Governance Benchmark</h2>
+
+<p>The Governance Benchmark module allows NOCSL to assess and compare the governance quality of all 34 federations against eight standardised dimensions. Federation officers submit their self-assessment scores annually, which are displayed in a sector-wide ranking table.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/governance</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+      <div class="kpi-card"><div class="kpi-val" style="font-size:1.2rem">18/34</div><div class="kpi-label">Reports Submitted</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="font-size:1.2rem;color:#1F4E79">3.82</div><div class="kpi-label">Avg Score / 5.0</div></div>
+      <div class="kpi-card green"><div class="kpi-val" style="font-size:1.2rem">8</div><div class="kpi-label">Green ≥ 4.0</div></div>
+      <div class="kpi-card red"><div class="kpi-val" style="font-size:1.2rem">3</div><div class="kpi-label">Red &lt; 3.0</div></div>
+    </div>
+    <div class="mini-panel">
+      <div class="mini-panel-hdr">Federation Governance Rankings — 2025</div>
+      <div style="overflow-x:auto">
+        <table class="mini-table">
+          <thead><tr><th>#</th><th>Federation</th><th>Sport</th><th>Score</th><th>Board</th><th>Finance</th><th>Strategy</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Sri Lanka Cricket</strong></td><td>Cricket</td><td><strong>4.50</strong></td><td>4.5</td><td>4.7</td><td>4.6</td><td><span class="score-badge score-green">Green</span></td></tr>
+            <tr><td>2</td><td>SL Athletics</td><td>Athletics</td><td><strong>4.30</strong></td><td>4.2</td><td>4.4</td><td>4.3</td><td><span class="score-badge score-green">Green</span></td></tr>
+            <tr><td>3</td><td>SL Badminton</td><td>Badminton</td><td><strong>4.10</strong></td><td>4.0</td><td>4.1</td><td>4.2</td><td><span class="score-badge score-green">Green</span></td></tr>
+            <tr><td>4</td><td>SL Swimming</td><td>Swimming</td><td><strong>3.75</strong></td><td>3.8</td><td>3.7</td><td>3.9</td><td><span class="score-badge score-amber">Amber</span></td></tr>
+            <tr><td style="color:#b91c1c">16</td><td>SL Wrestling</td><td>Wrestling</td><td style="color:#b91c1c"><strong>1.50</strong></td><td>1.5</td><td>1.3</td><td>1.8</td><td><span class="score-badge score-red">Red</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Eight Governance Dimensions — Scoring Framework</h3>
+<p>Every federation is assessed against eight standardised dimensions drawn from international sports governance frameworks (SportAccord, IOC, Commonwealth Games Federation). Each dimension is scored 1.0–5.0 by the federation officer and validated by NOCSL during annual review.</p>
+
+<table class="rtable">
+  <thead><tr><th>#</th><th>Dimension</th><th>What It Measures</th><th>Minimum Acceptable</th><th>Red Flag Below</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong>Board Composition</strong></td><td>Size, term limits, independence, election process, gender balance of executive committee</td><td>3.5</td><td>2.5</td></tr>
+    <tr><td>2</td><td><strong>Director Skills & Training</strong></td><td>Qualifications, CPD hours, technical capacity of EC officers, succession planning</td><td>3.0</td><td>2.0</td></tr>
+    <tr><td>3</td><td><strong>Strategic Planning</strong></td><td>Existence of current strategic plan, alignment with national sports policy, targets and KPIs</td><td>3.5</td><td>2.5</td></tr>
+    <tr><td>4</td><td><strong>Financial Transparency</strong></td><td>Audited accounts, financial reporting frequency, sponsor disclosure, conflict-of-interest policies</td><td>4.0</td><td>3.0</td></tr>
+    <tr><td>5</td><td><strong>Integrity & Risk Management</strong></td><td>Anti-corruption policies, doping controls, match-fixing protocols, whistle-blower mechanisms</td><td>3.5</td><td>2.5</td></tr>
+    <tr><td>6</td><td><strong>Culture & Ethics</strong></td><td>Code of conduct, player welfare policies, anti-discrimination, community engagement</td><td>3.0</td><td>2.0</td></tr>
+    <tr><td>7</td><td><strong>Safeguarding</strong></td><td>Child protection policies, coach vetting, Safe Sport implementation, incident reporting</td><td>3.5</td><td>2.0</td></tr>
+    <tr><td>8</td><td><strong>Digital Governance</strong></td><td>Data management practices, privacy policy, digital communications, records management</td><td>2.5</td><td>1.5</td></tr>
+  </tbody>
+</table>
+
+<h3>Governance Radar — Visual Profile by Federation</h3>
+<p>The radar chart below plots all eight governance dimensions simultaneously for a federation, allowing instant identification of which areas are strong and which require intervention. The green polygon represents a high-performing federation (SL Cricket, score 4.50) versus a red-flagged federation (SL Wrestling, score 1.50).</p>
+
+<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:20px;margin:12px 0 20px">
+  <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+    <!-- Radar Chart SVG -->
+    <div style="flex:0 0 auto">
+      <svg viewBox="0 0 340 290" width="320" height="290" style="display:block">
+        <!-- Background rings -->
+        <polygon points="160,50 224,76 250,140 224,204 160,230 96,204 70,140 96,76" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+        <polygon points="160,68 211,89 232,140 211,191 160,212 109,191 88,140 109,89" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+        <polygon points="160,86 198,102 214,140 198,178 160,194 122,178 106,140 122,102" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+        <polygon points="160,104 185,115 196,140 185,165 160,176 135,165 124,140 135,115" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+        <polygon points="160,122 173,127 178,140 173,153 160,158 147,153 142,140 147,127" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+        <!-- Axis lines -->
+        <line x1="160" y1="140" x2="160" y2="50" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="224" y2="76" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="250" y2="140" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="224" y2="204" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="160" y2="230" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="96" y2="204" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="70" y2="140" stroke="#cbd5e1" stroke-width="0.8"/>
+        <line x1="160" y1="140" x2="96" y2="76" stroke="#cbd5e1" stroke-width="0.8"/>
+        <!-- Score scale labels on right axis -->
+        <text x="182" y="138" font-size="7" fill="#94a3b8">1</text>
+        <text x="199" y="138" font-size="7" fill="#94a3b8">2</text>
+        <text x="217" y="138" font-size="7" fill="#94a3b8">3</text>
+        <text x="235" y="138" font-size="7" fill="#94a3b8">4</text>
+        <text x="253" y="138" font-size="7" fill="#94a3b8">5</text>
+        <!-- SL Cricket polygon (green) -->
+        <polygon points="160,59 214,87 243,140 220,200 160,212 107,194 92,140 116,96" fill="rgba(34,197,94,0.18)" stroke="#22c55e" stroke-width="2"/>
+        <!-- SL Wrestling polygon (red) -->
+        <polygon points="160,113 177,124 192,140 175,155 160,158 142,158 140,140 140,120" fill="rgba(239,68,68,0.18)" stroke="#ef4444" stroke-width="2"/>
+        <!-- Dimension labels -->
+        <text x="160" y="38" font-size="8" fill="#1F4E79" text-anchor="middle" font-weight="700">Board Composition</text>
+        <text x="234" y="66" font-size="8" fill="#1F4E79" text-anchor="start">Director Skills</text>
+        <text x="258" y="143" font-size="8" fill="#1F4E79" text-anchor="start">Strategic Plan</text>
+        <text x="228" y="215" font-size="8" fill="#1F4E79" text-anchor="start">Financial</text>
+        <text x="160" y="248" font-size="8" fill="#1F4E79" text-anchor="middle" font-weight="700">Integrity &amp; Risk</text>
+        <text x="90" y="215" font-size="8" fill="#1F4E79" text-anchor="end">Culture &amp; Ethics</text>
+        <text x="58" y="143" font-size="8" fill="#1F4E79" text-anchor="end">Safeguarding</text>
+        <text x="88" y="66" font-size="8" fill="#1F4E79" text-anchor="end">Digital Gov.</text>
+        <!-- Center dot -->
+        <circle cx="160" cy="140" r="3" fill="#1F4E79"/>
+      </svg>
+    </div>
+    <!-- Legend + scores -->
+    <div style="flex:1;min-width:200px">
+      <div style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <div style="width:14px;height:3px;background:#22c55e;border-radius:2px"></div>
+          <span style="font-size:.78rem;font-weight:700;color:#15803d">Sri Lanka Cricket — Score 4.50 (Green)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Board Composition</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:90%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700">4.5</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Director Skills</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:84%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700">4.2</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Strategic Planning</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:92%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700">4.6</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Financial Transparency</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:94%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700">4.7</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Integrity &amp; Risk</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:80%;background:#f59e0b"></div></div><span style="color:#b45309;font-weight:700">4.0</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Culture &amp; Ethics</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:84%;background:#22c55e"></div></div><span style="color:#15803d;font-weight:700">4.2</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Safeguarding</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:76%;background:#f59e0b"></div></div><span style="color:#b45309;font-weight:700">3.8</span></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:.65rem"><span style="min-width:130px;color:#475569">Digital Governance</span><div class="load-bar" style="width:80px"><div class="load-fill" style="width:70%;background:#f59e0b"></div></div><span style="color:#b45309;font-weight:700">3.5</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <div style="width:14px;height:3px;background:#ef4444;border-radius:2px"></div>
+          <span style="font-size:.78rem;font-weight:700;color:#b91c1c">SL Wrestling — Score 1.50 (Red)</span>
+        </div>
+        <div style="background:#fee2e2;border-radius:6px;padding:8px 10px;font-size:.65rem;color:#b91c1c;line-height:1.6">
+          ⚠ Critically low scores across all dimensions. Risk of gazette recognition loss. Immediate NOCSL intervention required before next Ministry review.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Transparent, evidence-based ranking of all federations enables fair, defensible resource allocation decisions</li>
+    <li>Radar chart reveals hidden weaknesses — a federation with a high overall score may still have critical gaps in specific dimensions (e.g., Safeguarding or Digital Governance)</li>
+    <li>Red-flagged federations can be targeted for capacity building programmes before issues escalate to gazette recognition risk</li>
+    <li>Year-on-year score comparison shows whether NOCSL governance interventions are producing measurable results</li>
+    <li>Ministry of Sports can request the full benchmark report at any time without NOCSL staff involvement — reducing administrative burden and improving transparency</li>
+    <li>NOCSL can demonstrate governance progress to IOC and international partners using standardised, comparable data</li>
+  </ul>
+</div>
+
+<!-- ─── 06 COMPLIANCE ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 06</div>
+<h2>Compliance & Gazette Module</h2>
+
+<p>The Compliance module enforces the National Sports Associations Regulations No. 01 of 2025 (Gazette No. 2437/24) across all 34 federations simultaneously. It is the first digital implementation of gazette-based sports compliance in Sri Lanka.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/compliance</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+      <div class="kpi-card"><div class="kpi-val" style="color:#1d4ed8;font-size:1.2rem">6</div><div class="kpi-label">Grade A Federations</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#b45309;font-size:1.2rem">14</div><div class="kpi-label">Grade B Federations</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#64748b;font-size:1.2rem">14</div><div class="kpi-label">Grade C Federations</div></div>
+      <div class="kpi-card green"><div class="kpi-val" style="font-size:1.2rem">22</div><div class="kpi-label">Fully Compliant 5/5</div></div>
+    </div>
+    <div class="mini-panel">
+      <div class="mini-panel-hdr">Gazette Compliance Matrix — All 34 Federations (representative sample)</div>
+      <div style="overflow-x:auto">
+        <div class="comp-row-hdr">
+          <div>Federation</div><div style="text-align:center;font-size:.55rem">AGM</div><div style="text-align:center;font-size:.55rem">Financial</div><div style="text-align:center;font-size:.55rem">Strategy</div><div style="text-align:center;font-size:.55rem">Gender</div><div style="text-align:center;font-size:.55rem">Champ</div><div style="text-align:center">Score</div>
+        </div>
+        <div class="comp-row"><div><span class="grade-a" style="width:16px;height:16px;font-size:.5rem">A</span> Sri Lanka Cricket</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">4/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-a" style="width:16px;height:16px;font-size:.5rem">A</span> SL Athletics</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-full">5/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-a" style="width:16px;height:16px;font-size:.5rem">A</span> SL Badminton</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-full">5/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-b" style="width:16px;height:16px;font-size:.5rem">B</span> SL Swimming</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">3/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-b" style="width:16px;height:16px;font-size:.5rem">B</span> SL Volleyball</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">3/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-b" style="width:16px;height:16px;font-size:.5rem">B</span> SL Weightlifting</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div><span class="comp-score-pill cp-mid">3/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-c" style="width:16px;height:16px;font-size:.5rem">C</span> SL Boxing</div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">2/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-c" style="width:16px;height:16px;font-size:.5rem">C</span> SL Cycling</div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div><span class="comp-score-pill cp-low">1/5</span></div></div>
+        <div class="comp-row"><div><span class="grade-c" style="width:16px;height:16px;font-size:.5rem">C</span> SL Wrestling</div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div><span class="comp-score-pill cp-low">0/5</span></div></div>
+        <div class="comp-row" style="background:#fffbeb;border-color:#fde68a"><div style="color:#b45309;font-style:italic">+ 25 more federations...</div><div class="comp-tick"></div><div class="comp-tick"></div><div class="comp-tick"></div><div class="comp-tick"></div><div class="comp-tick"></div><div><span style="font-size:.6rem;color:#64748b">See full report</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Compliance Alert System</h3>
+<p>When a federation's compliance status changes — a deadline is missed, a term limit is approaching, or a gazette requirement lapses — SLSIE automatically raises a compliance alert. Alerts are visible on the compliance dashboard and can trigger automated email notifications to the federation and NOCSL admin.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/compliance — Alerts Panel</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">
+      <div style="background:#b91c1c;color:#fff;padding:8px 14px;font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:8px">
+        <span>⚠</span> Active Compliance Alerts — 7 Federations Require Attention
+      </div>
+      <!-- Alert rows -->
+      <div style="padding:8px 12px;border-bottom:1px solid #fee2e2;background:#fff9f9;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:.8rem;color:#b91c1c;flex-shrink:0;margin-top:1px">🔴</span>
+        <div style="flex:1">
+          <div style="font-size:.7rem;font-weight:700;color:#1e293b">SL Wrestling — CRITICAL: 0/5 Compliance Requirements Met</div>
+          <div style="font-size:.62rem;color:#64748b;margin-top:2px">No AGM held · No financial statements submitted · No strategic plan · Gender quota not met · No national championship. Grade C. Risk of gazette recognition suspension.</div>
+        </div>
+        <span style="font-size:.6rem;background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:8px;font-weight:700;flex-shrink:0">CRITICAL</span>
+      </div>
+      <div style="padding:8px 12px;border-bottom:1px solid #fee2e2;background:#fff9f9;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:.8rem;color:#b91c1c;flex-shrink:0;margin-top:1px">🔴</span>
+        <div style="flex:1">
+          <div style="font-size:.7rem;font-weight:700;color:#1e293b">SL Cycling — Annual General Meeting overdue by 47 days</div>
+          <div style="font-size:.62rem;color:#64748b;margin-top:2px">AGM was due 1 Mar 2026. No record of meeting held. Financial statements and national championship also outstanding. Grade C.</div>
+        </div>
+        <span style="font-size:.6rem;background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:8px;font-weight:700;flex-shrink:0">OVERDUE</span>
+      </div>
+      <div style="padding:8px 12px;border-bottom:1px solid #fef3c7;background:#fffdf5;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:.8rem;color:#b45309;flex-shrink:0;margin-top:1px">🟡</span>
+        <div style="flex:1">
+          <div style="font-size:.7rem;font-weight:700;color:#1e293b">Sri Lanka Cricket — Gender Quota Not Met (1 female EC officer, minimum 2)</div>
+          <div style="font-size:.62rem;color:#64748b;margin-top:2px">Gazette Regulation 14(3) requires minimum 2 female members on the executive committee. Current: 1 female. Next AGM due Aug 2026 — must correct at election.</div>
+        </div>
+        <span style="font-size:.6rem;background:#fef3c7;color:#b45309;padding:2px 8px;border-radius:8px;font-weight:700;flex-shrink:0">WARNING</span>
+      </div>
+      <div style="padding:8px 12px;border-bottom:1px solid #fef3c7;background:#fffdf5;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:.8rem;color:#b45309;flex-shrink:0;margin-top:1px">🟡</span>
+        <div style="flex:1">
+          <div style="font-size:.7rem;font-weight:700;color:#1e293b">SL Swimming — Audited Financial Statements not submitted for 2025</div>
+          <div style="font-size:.62rem;color:#64748b;margin-top:2px">Deadline was 30 Apr 2026. Currently 20 days overdue. Grade B status at risk if not submitted before Q2 Ministry review on 15 Jun 2026.</div>
+        </div>
+        <span style="font-size:.6rem;background:#fef3c7;color:#b45309;padding:2px 8px;border-radius:8px;font-weight:700;flex-shrink:0">WARNING</span>
+      </div>
+      <div style="padding:8px 12px;border-bottom:1px solid #fef3c7;background:#fffdf5;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:.8rem;color:#b45309;flex-shrink:0;margin-top:1px">🟡</span>
+        <div style="flex:1">
+          <div style="font-size:.7rem;font-weight:700;color:#1e293b">SL Volleyball — EC President approaching 8-year term limit (7 years 3 months served)</div>
+          <div style="font-size:.62rem;color:#64748b;margin-top:2px">President R. Jayawardena has served 7 years 3 months. Gazette maximum is 8 years. Must vacate at next AGM (Sep 2026) or face disqualification under Regulation 18.</div>
+        </div>
+        <span style="font-size:.6rem;background:#fef3c7;color:#b45309;padding:2px 8px;border-radius:8px;font-weight:700;flex-shrink:0">APPROACHING</span>
+      </div>
+      <div style="padding:8px 12px;background:#f0fdf4;display:flex;align-items:center;gap:8px;font-size:.65rem;color:#15803d">
+        <span>✓</span> 27 federations have no active compliance alerts
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Eliminates manual compliance auditing — the system checks all 5 gazette requirements for all 34 federations automatically and continuously</li>
+    <li>Compliance Alerts surface problems proactively — NOCSL is notified before a deadline passes, not after a crisis occurs</li>
+    <li>Grade A/B/C classification directly determines government funding eligibility — a federation dropping from A to C can lose access to LKR 5–15M in annual Ministry grants</li>
+    <li>EC Officer term limit tracking prevents illegal office-holding and protects NOCSL from legal liability under gazette regulations</li>
+    <li>Gender quota monitoring ensures NOCSL meets its inclusion obligations at every election cycle without manual counting</li>
+    <li>NOCSL legal protection — documented, timestamped compliance records for every federation serve as evidence in gazette enforcement proceedings</li>
+  </ul>
+</div>
+
+<!-- ─── 07 ATHLETES ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 07</div>
+<h2>Athletes Module</h2>
+
+<p>The Athletes module provides a complete health and performance monitoring system for all registered national athletes. It uses the Acute-to-Chronic Workload Ratio (ACWR) methodology — the international standard for injury risk prediction — and tracks biometrics, training load, and performance test results over time.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/athlete/3</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div class="ath-header">
+      <div class="ath-avatar">TD</div>
+      <div style="flex:1">
+        <div class="ath-name">Tharushi Dissanayake</div>
+        <div class="ath-meta">Athletics · Sri Lanka Athletics · Age 22 · Female · Sabaragamuwa</div>
+      </div>
+      <div style="text-align:center">
+        <div class="acwr-val acwr-ok" style="font-size:1.4rem">1.02</div>
+        <div style="font-size:.58rem;color:rgba(255,255,255,.7)">ACWR</div>
+        <span style="background:#dcfce7;color:#15803d;font-size:.58rem;padding:2px 7px;border-radius:8px;font-weight:700">✓ OPTIMAL</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:10px">
+      <div class="kpi-card" style="padding:8px;text-align:center"><div class="kpi-val" style="font-size:.85rem">168cm</div><div class="kpi-label">Height</div></div>
+      <div class="kpi-card" style="padding:8px;text-align:center"><div class="kpi-val" style="font-size:.85rem">58kg</div><div class="kpi-label">Weight</div></div>
+      <div class="kpi-card green" style="padding:8px;text-align:center"><div class="kpi-val" style="font-size:.85rem">20.6</div><div class="kpi-label">BMI</div></div>
+      <div class="kpi-card" style="padding:8px;text-align:center"><div class="kpi-val" style="font-size:.85rem">62bpm</div><div class="kpi-label">Heart Rate</div></div>
+      <div class="kpi-card" style="padding:8px;text-align:center"><div class="kpi-val" style="font-size:.85rem">7/10</div><div class="kpi-label">Sleep</div></div>
+      <div class="kpi-card green" style="padding:8px;text-align:center"><div class="kpi-val" style="font-size:.85rem">9/10</div><div class="kpi-label">Mental WB</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Training Load — ATL / CTL / ACWR</div>
+        <div class="mini-panel-body">
+          <div style="font-size:.6rem;color:#64748b;margin-bottom:6px">Last 6 sessions</div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:.62rem"><span style="color:#ef4444;min-width:55px">ATL (Acute)</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:72%;background:#ef4444"></div></div><span>360</span></div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:.62rem"><span style="color:#2E75B6;min-width:55px">CTL (Chronic)</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:70%;background:#2E75B6"></div></div><span>353</span></div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:.62rem"><span style="color:#7c3aed;min-width:55px">ACWR</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:41%;background:#7c3aed"></div></div><span>1.02</span></div>
+          </div>
+          <div style="background:#dcfce7;border-radius:5px;padding:5px 8px;margin-top:6px;font-size:.6rem;color:#15803d"><strong>✓ OPTIMAL ZONE:</strong> ACWR 0.8–1.3 — athlete is training appropriately</div>
+        </div>
+      </div>
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Performance Tests (Recent)</div>
+        <div class="mini-panel-body" style="padding:6px">
+          <table class="mini-table">
+            <thead><tr><th>Date</th><th>Test</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Apr 2025</td><td>100m Sprint</td><td><strong>11.84s</strong></td></tr>
+              <tr><td>Apr 2025</td><td>Vertical Jump</td><td><strong>62cm</strong></td></tr>
+              <tr><td>Mar 2025</td><td>100m Sprint</td><td><strong>12.04s</strong></td></tr>
+              <tr><td>Feb 2025</td><td>Vertical Jump</td><td><strong>59cm</strong></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:.6rem;color:#15803d;margin-top:5px">📈 Sprint improved 0.20s · Jump improved +3cm over 2 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>AI Injury Risk Alert — High ACWR Athletes</h3>
+<p>The Athletes list view includes a real-time injury risk panel. Any athlete whose ACWR exceeds 1.3 (caution zone) or 1.5 (danger zone) is automatically flagged. Coaches and NOCSL admins see the complete risk register at a glance — with the AI Coaching Insight summarising what action should be taken for each flagged athlete.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/athletes — Injury Risk Panel</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:10px">
+      <div style="background:linear-gradient(90deg,#b91c1c,#ef4444);color:#fff;padding:9px 14px;font-size:.72rem;font-weight:700;display:flex;justify-content:space-between;align-items:center">
+        <span>⚠ AI Injury Risk Alert — 4 Athletes Above Danger Threshold (ACWR &gt; 1.5)</span>
+        <span style="background:rgba(255,255,255,.2);padding:2px 8px;border-radius:8px;font-size:.6rem">Updated: Live</span>
+      </div>
+      <!-- Risk row 1 -->
+      <div style="padding:8px 12px;border-bottom:1px solid #fee2e2;background:#fff9f9;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center">
+        <div style="width:32px;height:32px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#b91c1c;border:2px solid #ef4444">KP</div>
+        <div>
+          <div style="font-size:.72rem;font-weight:700;color:#1e293b">Kavindu Perera &nbsp;<span style="font-size:.6rem;color:#64748b;font-weight:400">· SL Athletics · Male · Age 24</span></div>
+          <div style="font-size:.6rem;color:#94a3b8;margin-top:2px">ATL: 540 &nbsp;|&nbsp; CTL: 320 &nbsp;|&nbsp; ACWR: <strong style="color:#b91c1c">1.69</strong> &nbsp;|&nbsp; Last 7 days: 5 sessions</div>
+          <div style="font-size:.6rem;color:#b91c1c;margin-top:2px;font-style:italic">⚠ Significantly overloaded. Soft tissue injury risk is high. Recommend 3-day rest followed by reduced load week.</div>
+        </div>
+        <span style="background:#fee2e2;color:#b91c1c;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:8px;white-space:nowrap">🔴 DANGER 1.69</span>
+      </div>
+      <!-- Risk row 2 -->
+      <div style="padding:8px 12px;border-bottom:1px solid #fee2e2;background:#fff9f9;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center">
+        <div style="width:32px;height:32px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#b91c1c;border:2px solid #ef4444">RF</div>
+        <div>
+          <div style="font-size:.72rem;font-weight:700;color:#1e293b">Ruwandi Fernando &nbsp;<span style="font-size:.6rem;color:#64748b;font-weight:400">· SL Swimming · Female · Age 21</span></div>
+          <div style="font-size:.6rem;color:#94a3b8;margin-top:2px">ATL: 490 &nbsp;|&nbsp; CTL: 310 &nbsp;|&nbsp; ACWR: <strong style="color:#b91c1c">1.58</strong> &nbsp;|&nbsp; Last 7 days: 6 sessions</div>
+          <div style="font-size:.6rem;color:#b91c1c;margin-top:2px;font-style:italic">⚠ Acute load spike detected. Shoulder overuse risk. Coach should review programme density immediately.</div>
+        </div>
+        <span style="background:#fee2e2;color:#b91c1c;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:8px;white-space:nowrap">🔴 DANGER 1.58</span>
+      </div>
+      <!-- Risk row 3 -->
+      <div style="padding:8px 12px;border-bottom:1px solid #fef3c7;background:#fffdf5;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center">
+        <div style="width:32px;height:32px;background:#fef3c7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#b45309;border:2px solid #f59e0b">AS</div>
+        <div>
+          <div style="font-size:.72rem;font-weight:700;color:#1e293b">Amila Senanayake &nbsp;<span style="font-size:.6rem;color:#64748b;font-weight:400">· SL Badminton · Male · Age 26</span></div>
+          <div style="font-size:.6rem;color:#94a3b8;margin-top:2px">ATL: 410 &nbsp;|&nbsp; CTL: 295 &nbsp;|&nbsp; ACWR: <strong style="color:#b45309">1.39</strong> &nbsp;|&nbsp; Last 7 days: 4 sessions</div>
+          <div style="font-size:.6rem;color:#b45309;margin-top:2px;font-style:italic">⚡ Entering caution zone. Monitor closely. Pre-competition load should be held steady this week.</div>
+        </div>
+        <span style="background:#fef3c7;color:#b45309;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:8px;white-space:nowrap">🟡 CAUTION 1.39</span>
+      </div>
+      <!-- Risk row 4 -->
+      <div style="padding:8px 12px;border-bottom:1px solid #fef3c7;background:#fffdf5;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center">
+        <div style="width:32px;height:32px;background:#fef3c7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#b45309;border:2px solid #f59e0b">NW</div>
+        <div>
+          <div style="font-size:.72rem;font-weight:700;color:#1e293b">Nirmala Wickramasinghe &nbsp;<span style="font-size:.6rem;color:#64748b;font-weight:400">· SL Volleyball · Female · Age 23</span></div>
+          <div style="font-size:.6rem;color:#94a3b8;margin-top:2px">ATL: 380 &nbsp;|&nbsp; CTL: 276 &nbsp;|&nbsp; ACWR: <strong style="color:#b45309">1.38</strong> &nbsp;|&nbsp; Last 7 days: 4 sessions</div>
+          <div style="font-size:.6rem;color:#b45309;margin-top:2px;font-style:italic">⚡ Mental wellbeing score dropped to 5/10 this week. Combined with rising load — consider load reduction and wellness check-in.</div>
+        </div>
+        <span style="background:#fef3c7;color:#b45309;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:8px;white-space:nowrap">🟡 CAUTION 1.38</span>
+      </div>
+      <!-- Safe row -->
+      <div style="padding:8px 12px;background:#f0fdf4;display:flex;align-items:center;gap:8px;font-size:.65rem;color:#15803d">
+        <span>✓</span> 43 athletes in optimal ACWR range (0.8–1.3) · 0 athletes at rest/recovery
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>ACWR-based injury prediction — coaches are alerted before injuries occur, not after, shifting injury management from reactive to preventive</li>
+    <li>AI Injury Risk Alert register gives NOCSL and team coaches a single view of all athletes under stress across all federations — no need to check individual profiles</li>
+    <li>Colour-coded DANGER / CAUTION / OPTIMAL status enables non-technical users to act instantly without needing to understand the ACWR formula</li>
+    <li>6-month biometric and performance trend charts on each athlete profile replace manual tracking spreadsheets and clipboard records</li>
+    <li>Mental wellbeing and sleep quality monitoring alongside physical load — addressing whole-athlete welfare, not just training volume</li>
+    <li>Reducing soft tissue injuries directly protects national squad availability for international competitions — each serious injury typically removes an athlete from competition for 4–12 weeks</li>
+  </ul>
+</div>
+
+<!-- ─── 08 FIT FOR LIFE ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 08</div>
+<h2>Fit for Life Programme</h2>
+
+<p>The Fit for Life module is NOCSL's digital management system for the IOC Fit for Life 2025–2035 community sports development programme. Unlike the elite athlete modules, this programme serves non-elite community participants — ordinary citizens across all nine provinces of Sri Lanka who participate in sport for health, wellbeing, and social development.</p>
+
+<div class="info-box">
+  <strong>About IOC Fit for Life 2025–2035:</strong> The International Olympic Committee launched Fit for Life as its flagship community sports strategy under Olympic Agenda 2020+5. The programme's goal is to use sport as a tool for reducing non-communicable diseases, improving mental health outcomes, and building social cohesion in underserved communities. NOCSL, as the IOC-affiliated national committee, is the primary implementing body for Sri Lanka and is required to report programme outcomes to the IOC annually. SLSIE enables NOCSL to collect, manage, and report this data digitally for the first time.
+</div>
+
+<h3>Programme Objectives Tracked by SLSIE</h3>
+<table class="rtable">
+  <thead><tr><th>IOC Objective</th><th>SLSIE Measurement</th><th>Target Indicator</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Increase physical activity participation</strong></td><td>Total sessions logged per month, sports distribution, frequency per participant</td><td>≥4 sessions/month per participant</td></tr>
+    <tr><td><strong>Improve health outcomes</strong></td><td>BMI tracking over time, resting heart rate, body weight trends</td><td>Average BMI in healthy range (18.5–24.9)</td></tr>
+    <tr><td><strong>Improve mental wellbeing</strong></td><td>Monthly wellbeing survey score (1–10), stress indicators, mood tracking</td><td>Average mental wellbeing ≥ 7.0/10</td></tr>
+    <tr><td><strong>Improve sleep quality</strong></td><td>Self-reported sleep quality score (1–10) and hours per night</td><td>Average sleep quality ≥ 7.0/10</td></tr>
+    <tr><td><strong>Geographic equity</strong></td><td>Provincial distribution of participants, underserved region identification</td><td>All 9 provinces represented with ≥3 participants</td></tr>
+    <tr><td><strong>Gender inclusion</strong></td><td>Participant gender breakdown, female participation rate</td><td>≥40% female participation</td></tr>
+    <tr><td><strong>Sport diversity</strong></td><td>Number of different sports represented in programme</td><td>≥5 distinct sports per province</td></tr>
+  </tbody>
+</table>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/fitforlife</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+      <div class="kpi-card"><div class="kpi-val" style="font-size:1.2rem">47</div><div class="kpi-label">Total Participants</div></div>
+      <div class="kpi-card green"><div class="kpi-val" style="font-size:1.2rem">22.8</div><div class="kpi-label">Avg BMI</div></div>
+      <div class="kpi-card amber"><div class="kpi-val" style="font-size:1.2rem">7.2/10</div><div class="kpi-label">Avg Sleep Quality</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="font-size:1.2rem">8.1/10</div><div class="kpi-label">Mental Wellbeing</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Participants by Province</div>
+        <div class="mini-panel-body" style="padding:6px">
+          <table class="mini-table">
+            <thead><tr><th>Province</th><th>Participants</th><th>Share</th></tr></thead>
+            <tbody>
+              <tr><td>Western</td><td><strong>14</strong></td><td>29.8%</td></tr>
+              <tr><td>Southern</td><td><strong>9</strong></td><td>19.1%</td></tr>
+              <tr><td>Central</td><td><strong>7</strong></td><td>14.9%</td></tr>
+              <tr><td>Sabaragamuwa</td><td><strong>6</strong></td><td>12.8%</td></tr>
+              <tr><td>North Western</td><td><strong>4</strong></td><td>8.5%</td></tr>
+              <tr><td>Other (4)</td><td><strong>7</strong></td><td>14.9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Activity Statistics</div>
+        <div class="mini-panel-body">
+          <div style="display:flex;justify-content:space-between;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid #f1f5f9">
+            <span style="font-size:.65rem;color:#64748b">Total Sessions Logged</span>
+            <span style="font-size:.8rem;font-weight:800;color:#1F4E79">312</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid #f1f5f9">
+            <span style="font-size:.65rem;color:#64748b">Total Training Hours</span>
+            <span style="font-size:.8rem;font-weight:800;color:#1F4E79">428h</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid #f1f5f9">
+            <span style="font-size:.65rem;color:#64748b">Avg Sessions/Month</span>
+            <span style="font-size:.75rem;font-weight:700;color:#15803d">5.2 ✓</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span style="font-size:.65rem;color:#64748b">Top Sport</span>
+            <span style="font-size:.72rem;font-weight:700;color:#15803d">Athletics (12)</span>
+          </div>
+        </div>
+      </div>
+      <div class="mini-panel">
+        <div class="mini-panel-hdr">Health Indicators</div>
+        <div class="mini-panel-body">
+          <div style="font-size:.62rem;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid #f1f5f9">
+            <div style="color:#64748b;margin-bottom:3px">Average BMI — 22.8</div>
+            <div class="load-bar"><div class="load-fill" style="width:66%;background:#22c55e"></div></div>
+            <div style="color:#15803d;font-size:.58rem;margin-top:2px">✓ Healthy range</div>
+          </div>
+          <div style="font-size:.62rem;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid #f1f5f9">
+            <div style="color:#64748b;margin-bottom:3px">Mental Wellbeing — 8.1/10</div>
+            <div class="load-bar"><div class="load-fill" style="width:81%;background:#22c55e"></div></div>
+            <div style="color:#15803d;font-size:.58rem;margin-top:2px">✓ Above target (7.0)</div>
+          </div>
+          <div style="font-size:.62rem">
+            <div style="color:#64748b;margin-bottom:3px">Sleep Quality — 7.2/10</div>
+            <div class="load-bar"><div class="load-fill" style="width:72%;background:#f59e0b"></div></div>
+            <div style="color:#b45309;font-size:.58rem;margin-top:2px">⚡ Just above minimum</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Participant Health Data Collection Methodology</h3>
+<p>Each Fit for Life participant is registered in the system with a unique profile. Programme coordinators and coaches collect health data on a monthly basis through standardised assessments. Data is entered directly into SLSIE by provincial programme officers — eliminating paper forms and enabling real-time national reporting.</p>
+
+<table class="rtable">
+  <thead><tr><th>Data Category</th><th>Fields Collected</th><th>Collection Frequency</th><th>Entered By</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Physical Biometrics</strong></td><td>Height, weight, BMI (auto-calculated), resting heart rate</td><td>Monthly</td><td>Programme coordinator</td></tr>
+    <tr><td><strong>Physical Activity</strong></td><td>Sport type, session date, session duration, intensity level (1–5)</td><td>Per session (as logged)</td><td>Coach or participant</td></tr>
+    <tr><td><strong>Wellbeing Survey</strong></td><td>Mental wellbeing score (1–10), stress level (1–10), energy level (1–10)</td><td>Monthly (self-reported)</td><td>Participant</td></tr>
+    <tr><td><strong>Sleep Tracking</strong></td><td>Average nightly hours, sleep quality score (1–10)</td><td>Monthly (self-reported)</td><td>Participant</td></tr>
+    <tr><td><strong>Enrolment Data</strong></td><td>Age, gender, province, sport(s), enrolment date, programme year</td><td>Once at registration</td><td>Programme officer</td></tr>
+  </tbody>
+</table>
+
+<h3>Donor & IOC Reporting</h3>
+<p>SLSIE generates a dedicated <strong>Donor Impact Report</strong> and a <strong>Fit for Life Programme Report</strong> directly from the data collected in this module. These reports replace weeks of manual data compilation that was previously required before each IOC review or donor progress meeting.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 20px">
+  <div style="background:#fff;border:1.5px solid #bfdbfe;border-radius:10px;padding:14px 16px">
+    <div style="font-size:.7rem;font-weight:800;color:#1d4ed8;margin-bottom:8px">📄 IOC Annual Report Requirements</div>
+    <ul style="padding-left:16px">
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Total number of community participants by province, gender, and sport</li>
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Average health indicator improvements (BMI, wellbeing, sleep) from baseline to year-end</li>
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Total activity hours and session count — evidence of programme reach</li>
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Geographic coverage — provinces served and underserved region analysis</li>
+      <li style="font-size:.68rem;color:#334155;line-height:1.5">Trend data — year-on-year programme growth comparison</li>
+    </ul>
+  </div>
+  <div style="background:#fff;border:1.5px solid #bbf7d0;border-radius:10px;padding:14px 16px">
+    <div style="font-size:.7rem;font-weight:800;color:#15803d;margin-bottom:8px">💰 UNDP / Donor Reporting Requirements</div>
+    <ul style="padding-left:16px">
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Number of direct beneficiaries reached — by demographic breakdown</li>
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Measurable health outcomes — percentage showing BMI improvement</li>
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Mental health impact — percentage reporting improved wellbeing scores</li>
+      <li style="font-size:.68rem;color:#334155;margin-bottom:5px;line-height:1.5">Budget utilisation evidence — cost per participant per outcome</li>
+      <li style="font-size:.68rem;color:#334155;line-height:1.5">SDG alignment evidence — linking programme outcomes to SDG 3 (Health) and SDG 10 (Inequality)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Demonstrates measurable programme reach and health impact to IOC, UNDP, and international donors with verified, real-time data</li>
+    <li>Provincial breakdown immediately shows geographic equity gaps — which regions are underserved and need additional investment</li>
+    <li>Monthly health indicator tracking shows whether the programme is delivering its core health objectives — not just participation numbers</li>
+    <li>Health outcome tracking supports NOCSL's mandatory reporting obligations under the IOC Fit for Life 2025–2035 framework</li>
+    <li>Donor Impact Report and Fit for Life Report are generated instantly from live data — eliminating 2–3 weeks of manual data compilation before each donor review</li>
+    <li>Digital evidence trail enables NOCSL to defend programme effectiveness to Ministry and justify continued funding requests</li>
+    <li>Wellbeing and sleep data go beyond standard physical health metrics — aligning with IOC's holistic athlete and participant welfare agenda</li>
+  </ul>
+</div>
+
+<!-- ─── 09 REPORTS ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 09</div>
+<h2>Reports Module</h2>
+
+<p>The Reports module generates six professionally formatted reports on demand — each available as a browser-viewable HTML report or a downloadable Word document. Every HTML report includes an AI-generated executive summary paragraph written specifically for that report's data.</p>
+
+<!-- REPORT 1: Governance -->
+<h3>Report 1 — Governance Benchmarking Report</h3>
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/reports/html/governance &nbsp;· Audience: NOCSL Board, Ministry of Sports</span>
+  </div>
+  <div style="background:#fff">
+    <!-- Report cover -->
+    <div class="report-cover-mini">
+      <div class="rc-org">National Olympic Committee of Sri Lanka · SLSIE v1.0</div>
+      <div class="rc-title">Governance Benchmarking Report 2025</div>
+      <div class="rc-meta">Generated: 20 May 2026 &nbsp;|&nbsp; Reporting Period: Jan–May 2025 &nbsp;|&nbsp; Classification: Restricted</div>
+    </div>
+    <div style="padding:14px">
+      <!-- AI Summary -->
+      <div class="ai-summary-box">
+        <div class="ai-sum-icon">✦</div>
+        <div>
+          <div class="ai-sum-label">AI Executive Summary — SLSIE Intelligence Engine</div>
+          <div class="ai-sum-text">Of the 18 federations that have submitted 2025 governance assessments, the sector average of 3.82/5.0 reflects moderate governance maturity with significant variance — Sri Lanka Cricket leads at 4.50 while SL Wrestling scores critically low at 1.50, signalling urgent intervention. Eight federations achieved Green status (≥4.0). NOCSL should prioritise capacity-building support for the three Red-flagged federations before the Q3 Ministry review on 15 July 2026.</div>
+        </div>
+      </div>
+      <!-- KPI row -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0">
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.95rem">34</div><div class="kpi-label">Total Federations</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.95rem">18</div><div class="kpi-label">Reports Submitted</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.95rem">8</div><div class="kpi-label">Green ≥ 4.0</div></div>
+        <div class="kpi-card amber"><div class="kpi-val" style="font-size:.95rem">7</div><div class="kpi-label">Amber 3.0–3.9</div></div>
+        <div class="kpi-card red"><div class="kpi-val" style="font-size:.95rem">3</div><div class="kpi-label">Red &lt; 3.0</div></div>
+      </div>
+      <!-- Full rankings table -->
+      <div style="font-size:.7rem;font-weight:700;color:#1F4E79;margin-bottom:6px;border-bottom:1.5px solid #1F4E79;padding-bottom:4px">Section 1 — Federation Governance Rankings 2025 (All 8 Dimensions)</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead>
+          <tr><th>#</th><th>Federation</th><th>Overall</th><th>Board</th><th>Director</th><th>Strategy</th><th>Finance</th><th>Integrity</th><th>Culture</th><th>Safe.</th><th>Digital</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td><strong>Sri Lanka Cricket</strong></td><td><strong style="color:#15803d">4.50</strong></td><td>4.5</td><td>4.2</td><td>4.6</td><td>4.7</td><td>4.0</td><td>4.2</td><td>3.8</td><td>3.5</td><td><span class="score-badge score-green">Green</span></td></tr>
+          <tr><td>2</td><td>SL Athletics</td><td><strong style="color:#15803d">4.30</strong></td><td>4.2</td><td>4.0</td><td>4.3</td><td>4.4</td><td>4.1</td><td>4.2</td><td>4.0</td><td>3.8</td><td><span class="score-badge score-green">Green</span></td></tr>
+          <tr><td>3</td><td>SL Badminton</td><td><strong style="color:#15803d">4.10</strong></td><td>4.0</td><td>3.9</td><td>4.2</td><td>4.1</td><td>4.0</td><td>4.2</td><td>3.9</td><td>3.5</td><td><span class="score-badge score-green">Green</span></td></tr>
+          <tr><td>4</td><td>SL Volleyball</td><td><strong style="color:#15803d">4.05</strong></td><td>4.1</td><td>3.8</td><td>4.0</td><td>4.2</td><td>3.9</td><td>4.0</td><td>3.8</td><td>3.6</td><td><span class="score-badge score-green">Green</span></td></tr>
+          <tr style="background:#f8faff"><td>5</td><td>SL Swimming</td><td><strong style="color:#b45309">3.75</strong></td><td>3.8</td><td>3.5</td><td>3.9</td><td>3.7</td><td>3.6</td><td>3.8</td><td>3.5</td><td>3.2</td><td><span class="score-badge score-amber">Amber</span></td></tr>
+          <tr style="background:#f8faff"><td>6</td><td>SL Weightlifting</td><td><strong style="color:#b45309">3.60</strong></td><td>3.5</td><td>3.4</td><td>3.7</td><td>3.6</td><td>3.5</td><td>3.7</td><td>3.4</td><td>3.0</td><td><span class="score-badge score-amber">Amber</span></td></tr>
+          <tr style="background:#f8faff"><td>7</td><td>SL Netball</td><td><strong style="color:#b45309">3.45</strong></td><td>3.4</td><td>3.3</td><td>3.5</td><td>3.4</td><td>3.3</td><td>3.5</td><td>3.2</td><td>2.8</td><td><span class="score-badge score-amber">Amber</span></td></tr>
+          <tr><td colspan="12" style="font-size:.58rem;color:#94a3b8;text-align:center;font-style:italic;padding:4px">... 11 more federations in Amber range (3.0–3.9) ...</td></tr>
+          <tr><td style="color:#b91c1c">14</td><td>SL Boxing</td><td><strong style="color:#b91c1c">2.80</strong></td><td>2.5</td><td>2.6</td><td>2.9</td><td>2.8</td><td>2.7</td><td>3.0</td><td>2.6</td><td>2.2</td><td><span class="score-badge score-red">Red</span></td></tr>
+          <tr><td style="color:#b91c1c">15</td><td>SL Cycling</td><td><strong style="color:#b91c1c">2.20</strong></td><td>2.2</td><td>2.0</td><td>2.3</td><td>2.1</td><td>2.0</td><td>2.4</td><td>2.0</td><td>1.8</td><td><span class="score-badge score-red">Red</span></td></tr>
+          <tr><td style="color:#b91c1c">16</td><td>SL Wrestling</td><td><strong style="color:#b91c1c">1.50</strong></td><td>1.5</td><td>1.3</td><td>1.8</td><td>1.3</td><td>1.2</td><td>1.6</td><td>1.4</td><td>1.2</td><td><span class="score-badge score-red">Red</span></td></tr>
+        </tbody>
+      </table>
+      <!-- Score distribution chart -->
+      <div style="font-size:.7rem;font-weight:700;color:#1F4E79;margin-bottom:8px;border-bottom:1.5px solid #1F4E79;padding-bottom:4px">Section 2 — Governance Score Distribution</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div>
+          <div style="font-size:.62rem;color:#64748b;margin-bottom:6px">Score distribution across submitted federations</div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:60px;padding-bottom:2px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="background:#22c55e;width:100%;height:43px;border-radius:3px 3px 0 0"></div><div style="font-size:.5rem;color:#64748b">Green<br>(8)</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="background:#f59e0b;width:100%;height:30px;border-radius:3px 3px 0 0"></div><div style="font-size:.5rem;color:#64748b">Amber<br>(7)</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="background:#ef4444;width:100%;height:16px;border-radius:3px 3px 0 0"></div><div style="font-size:.5rem;color:#64748b">Red<br>(3)</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="background:#e2e8f0;width:100%;height:23px;border-radius:3px 3px 0 0"></div><div style="font-size:.5rem;color:#64748b">Pending<br>(16)</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:.62rem;color:#64748b;margin-bottom:6px">Year-on-year sector average</div>
+          <div style="font-size:.62rem;display:flex;flex-direction:column;gap:5px">
+            <div style="display:flex;align-items:center;gap:6px"><span style="min-width:35px;color:#64748b">2023</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:62%;background:#94a3b8"></div></div><span style="font-weight:700;font-size:.6rem;color:#64748b">3.10</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="min-width:35px;color:#64748b">2024</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:68%;background:#f59e0b"></div></div><span style="font-weight:700;font-size:.6rem;color:#b45309">3.41</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><span style="min-width:35px;color:#475569;font-weight:700">2025</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:76%;background:#22c55e"></div></div><span style="font-weight:800;font-size:.6rem;color:#15803d">3.82 ▲</span></div>
+          </div>
+          <div style="background:#dcfce7;border-radius:5px;padding:4px 8px;font-size:.6rem;color:#15803d;margin-top:6px">Sector average improved +12% over 2 years</div>
+        </div>
+      </div>
+      <!-- Dimension analysis -->
+      <div style="font-size:.7rem;font-weight:700;color:#1F4E79;margin-bottom:8px;border-bottom:1.5px solid #1F4E79;padding-bottom:4px">Section 3 — Sector-Wide Dimension Analysis (submitted federations)</div>
+      <table class="mini-table" style="margin-bottom:10px">
+        <thead><tr><th>Dimension</th><th>Sector Average</th><th>Highest</th><th>Lowest</th><th>Federations Below 3.0</th></tr></thead>
+        <tbody>
+          <tr><td>Board Composition</td><td><strong>3.92</strong></td><td>4.5 (Cricket)</td><td>1.5 (Wrestling)</td><td>3</td></tr>
+          <tr><td>Financial Transparency</td><td><strong>3.88</strong></td><td>4.7 (Cricket)</td><td>1.3 (Wrestling)</td><td>3</td></tr>
+          <tr><td>Strategic Planning</td><td><strong>3.85</strong></td><td>4.6 (Cricket)</td><td>1.8 (Wrestling)</td><td>3</td></tr>
+          <tr><td>Culture &amp; Ethics</td><td><strong>3.82</strong></td><td>4.2 (Cricket)</td><td>1.6 (Wrestling)</td><td>3</td></tr>
+          <tr><td>Integrity &amp; Risk</td><td><strong>3.75</strong></td><td>4.1 (Athletics)</td><td>1.2 (Wrestling)</td><td>4</td></tr>
+          <tr><td>Safeguarding</td><td><strong>3.52</strong></td><td>4.0 (Athletics)</td><td>1.4 (Wrestling)</td><td>5</td></tr>
+          <tr><td>Director Skills</td><td><strong>3.48</strong></td><td>4.2 (Cricket)</td><td>1.3 (Wrestling)</td><td>5</td></tr>
+          <tr><td style="color:#b91c1c">Digital Governance</td><td><strong style="color:#b45309">3.12</strong></td><td>3.8 (Cricket)</td><td>1.2 (Wrestling)</td><td><strong style="color:#b91c1c">7</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="background:#fef3c7;border-left:3px solid #f59e0b;padding:8px 10px;font-size:.65rem;color:#78350f;margin-bottom:10px">⚡ <strong>Key Finding:</strong> Digital Governance is the weakest sector-wide dimension with 7 federations scoring below 3.0. NOCSL should include digital capacity-building in the 2026 federation support programme.</div>
+      <div class="export-btn-row">
+        <span class="exp-btn exp-word">📄 Download Full Word Report</span>
+        <span class="exp-btn exp-pdf" style="color:#b91c1c;border-color:#fecaca">🔴 View HTML Report</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT 2: Compliance -->
+<h3>Report 2 — Federation Compliance Report</h3>
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/reports/html/compliance &nbsp;· Audience: NOCSL Admin, Ministry of Sports</span>
+  </div>
+  <div style="background:#fff">
+    <div class="report-cover-mini" style="background:linear-gradient(135deg,#1d4ed8,#4f46e5)">
+      <div class="rc-org">National Olympic Committee of Sri Lanka · SLSIE v1.0</div>
+      <div class="rc-title">Federation Gazette Compliance Report 2025</div>
+      <div class="rc-meta">Generated: 20 May 2026 &nbsp;|&nbsp; Gazette No. 2437/24 · Regulations No. 01 of 2025 &nbsp;|&nbsp; Confidential</div>
+    </div>
+    <div style="padding:14px">
+      <div class="ai-summary-box">
+        <div class="ai-sum-icon">✦</div>
+        <div>
+          <div class="ai-sum-label">AI Executive Summary — SLSIE Intelligence Engine</div>
+          <div class="ai-sum-text">22 of 34 federations (64.7%) are fully compliant with all 5 gazette requirements. 7 federations have active compliance alerts — 2 are at risk of losing gazette recognition if outstanding requirements are not met before the June Ministry review. Gender quota is the most prevalent gap, affecting 9 federations. SL Wrestling and SL Cycling require urgent NOCSL intervention.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0">
+        <div class="kpi-card"><div class="kpi-val" style="color:#1d4ed8;font-size:.9rem">6</div><div class="kpi-label">Grade A</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="color:#b45309;font-size:.9rem">14</div><div class="kpi-label">Grade B</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="color:#64748b;font-size:.9rem">14</div><div class="kpi-label">Grade C</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">22</div><div class="kpi-label">Fully 5/5</div></div>
+        <div class="kpi-card red"><div class="kpi-val" style="font-size:.9rem">7</div><div class="kpi-label">Active Alerts</div></div>
+      </div>
+      <!-- Full compliance matrix -->
+      <div style="font-size:.7rem;font-weight:700;color:#1F4E79;margin-bottom:6px;border-bottom:1.5px solid #1F4E79;padding-bottom:4px">Section 1 — Gazette Compliance Matrix (Gazette No. 2437/24 — 5 Requirements)</div>
+      <div style="overflow-x:auto;margin-bottom:10px">
+        <div class="comp-row-hdr" style="grid-template-columns:155px repeat(5,1fr) 55px 60px">
+          <div>Federation</div><div style="text-align:center;font-size:.52rem">AGM Held</div><div style="text-align:center;font-size:.52rem">Audited<br>Financials</div><div style="text-align:center;font-size:.52rem">Strategic<br>Plan</div><div style="text-align:center;font-size:.52rem">Gender<br>Quota</div><div style="text-align:center;font-size:.52rem">National<br>Champ.</div><div style="text-align:center">Score</div><div style="text-align:center">Grade</div>
+        </div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px"><div>Sri Lanka Cricket</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">4/5</span></div><div style="text-align:center"><span class="grade-a">A</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px"><div>SL Athletics</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-full">5/5</span></div><div style="text-align:center"><span class="grade-a">A</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px"><div>SL Badminton</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-full">5/5</span></div><div style="text-align:center"><span class="grade-a">A</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px"><div>SL Volleyball</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">3/5</span></div><div style="text-align:center"><span class="grade-b">B</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px"><div>SL Swimming</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div><span class="comp-score-pill cp-mid">3/5</span></div><div style="text-align:center"><span class="grade-b">B</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px"><div>SL Weightlifting</div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div><span class="comp-score-pill cp-mid">3/5</span></div><div style="text-align:center"><span class="grade-b">B</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px;font-size:.58rem;font-style:italic;color:#94a3b8"><div colspan="8">... 22 more federations (15 Grade B, 7 Grade C fully compliant) ...</div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px;background:#fff9f9"><div style="color:#b91c1c">SL Cycling</div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-pass-t">✔</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div><span class="comp-score-pill cp-low">1/5</span></div><div style="text-align:center"><span class="grade-c">C</span></div></div>
+        <div class="comp-row" style="grid-template-columns:155px repeat(5,1fr) 55px 60px;background:#fff9f9"><div style="color:#b91c1c">SL Wrestling</div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div class="comp-tick"><span class="comp-fail-t">✘</span></div><div><span class="comp-score-pill cp-low">0/5</span></div><div style="text-align:center"><span class="grade-c">C</span></div></div>
+      </div>
+      <!-- Compliance gap analysis -->
+      <div style="font-size:.7rem;font-weight:700;color:#1F4E79;margin-bottom:8px;border-bottom:1.5px solid #1F4E79;padding-bottom:4px">Section 2 — Compliance Gap Analysis by Requirement</div>
+      <table class="mini-table" style="margin-bottom:10px">
+        <thead><tr><th>Requirement</th><th>Compliant</th><th>Non-Compliant</th><th>Compliance Rate</th><th>Most Common Issue</th></tr></thead>
+        <tbody>
+          <tr><td>Annual General Meeting</td><td style="color:#15803d"><strong>29</strong></td><td style="color:#b91c1c">5</td><td><div class="load-bar" style="width:80px;display:inline-block"><div class="load-fill" style="width:85%;background:#22c55e"></div></div> 85.3%</td><td>No quorum / not held</td></tr>
+          <tr><td>Audited Financial Statements</td><td style="color:#15803d"><strong>26</strong></td><td style="color:#b91c1c">8</td><td><div class="load-bar" style="width:80px;display:inline-block"><div class="load-fill" style="width:76%;background:#f59e0b"></div></div> 76.5%</td><td>Submission overdue</td></tr>
+          <tr><td>Strategic Plan in Force</td><td style="color:#15803d"><strong>28</strong></td><td style="color:#b91c1c">6</td><td><div class="load-bar" style="width:80px;display:inline-block"><div class="load-fill" style="width:82%;background:#22c55e"></div></div> 82.4%</td><td>Expired plan not renewed</td></tr>
+          <tr><td style="color:#b91c1c">Gender Quota (≥2 female EC)</td><td style="color:#15803d"><strong>25</strong></td><td style="color:#b91c1c"><strong>9</strong></td><td><div class="load-bar" style="width:80px;display:inline-block"><div class="load-fill" style="width:73%;background:#f59e0b"></div></div> 73.5%</td><td>Only 1 female EC officer</td></tr>
+          <tr><td>National Championship Held</td><td style="color:#15803d"><strong>31</strong></td><td style="color:#b91c1c">3</td><td><div class="load-bar" style="width:80px;display:inline-block"><div class="load-fill" style="width:91%;background:#22c55e"></div></div> 91.2%</td><td>Championship not organised</td></tr>
+        </tbody>
+      </table>
+      <!-- Active alerts -->
+      <div style="font-size:.7rem;font-weight:700;color:#b91c1c;margin-bottom:6px;border-bottom:1.5px solid #b91c1c;padding-bottom:4px">Section 3 — Active Compliance Alerts Requiring NOCSL Action</div>
+      <table class="mini-table" style="margin-bottom:10px">
+        <thead><tr><th>Federation</th><th>Alert</th><th>Due Date</th><th>Severity</th></tr></thead>
+        <tbody>
+          <tr style="background:#fff9f9"><td>SL Wrestling</td><td>0/5 requirements met — recognition at risk</td><td>Immediate</td><td><span class="score-badge score-red">CRITICAL</span></td></tr>
+          <tr style="background:#fff9f9"><td>SL Cycling</td><td>AGM overdue 47 days, financials missing</td><td>Immediate</td><td><span class="score-badge score-red">CRITICAL</span></td></tr>
+          <tr style="background:#fffdf5"><td>SL Swimming</td><td>Audited financials not submitted (20 days overdue)</td><td>Before 15 Jun</td><td><span class="score-badge score-amber">WARNING</span></td></tr>
+          <tr style="background:#fffdf5"><td>Sri Lanka Cricket</td><td>Gender quota: 1 female EC (minimum 2 required)</td><td>Next AGM Aug 2026</td><td><span class="score-badge score-amber">WARNING</span></td></tr>
+          <tr style="background:#fffdf5"><td>SL Volleyball</td><td>EC President approaching 8-year term limit</td><td>Next AGM Sep 2026</td><td><span class="score-badge score-amber">MONITOR</span></td></tr>
+        </tbody>
+      </table>
+      <div class="export-btn-row">
+        <span class="exp-btn exp-word">📄 Download Full Word Report</span>
+        <span class="exp-btn exp-pdf" style="color:#b91c1c;border-color:#fecaca">🔴 View HTML Report</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT 3: AI Injury Risk -->
+<h3>Report 3 — AI Injury Risk Alert Report</h3>
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/reports/html/athlete-risk &nbsp;· Audience: Head Coaches, Sports Medical Staff</span>
+  </div>
+  <div style="background:#fff">
+    <div class="report-cover-mini" style="background:linear-gradient(135deg,#991b1b,#dc2626)">
+      <div class="rc-org">National Olympic Committee of Sri Lanka · SLSIE v1.0</div>
+      <div class="rc-title">AI Injury Risk Alert Report — National Athletes</div>
+      <div class="rc-meta">Generated: 20 May 2026 &nbsp;|&nbsp; ACWR Analysis · All Active Athletes &nbsp;|&nbsp; Confidential — Medical &amp; Coaching Use</div>
+    </div>
+    <div style="padding:14px">
+      <div class="ai-summary-box" style="background:linear-gradient(135deg,#fff1f2,#fff5f5);border-color:#fecdd3">
+        <div class="ai-sum-icon" style="background:linear-gradient(135deg,#dc2626,#b91c1c)">✦</div>
+        <div>
+          <div class="ai-sum-label">AI Executive Summary — SLSIE Intelligence Engine</div>
+          <div class="ai-sum-text">4 athletes are currently above the ACWR danger threshold of 1.5, indicating high soft-tissue injury risk. Kavindu Perera (Athletics, ACWR 1.69) and Ruwandi Fernando (Swimming, ACWR 1.58) require immediate load reduction for minimum 5–7 days. 2 additional athletes in the caution zone (ACWR 1.3–1.5) should be monitored closely. Coaches are advised to review training programmes for all flagged athletes before the next session.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0">
+        <div class="kpi-card red"><div class="kpi-val" style="font-size:.95rem">4</div><div class="kpi-label">High Risk &gt;1.5</div></div>
+        <div class="kpi-card amber"><div class="kpi-val" style="font-size:.95rem">2</div><div class="kpi-label">Caution 1.3–1.5</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.95rem">38</div><div class="kpi-label">Optimal 0.8–1.3</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.95rem">3</div><div class="kpi-label">Insufficient Data</div></div>
+      </div>
+      <!-- High risk athletes detail -->
+      <div style="font-size:.7rem;font-weight:700;color:#b91c1c;margin-bottom:6px;border-bottom:1.5px solid #b91c1c;padding-bottom:4px">Section 1 — High Risk Athletes (ACWR &gt; 1.5) — Immediate Action Required</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead><tr><th>Athlete</th><th>Sport / Fed.</th><th>Age</th><th>ATL (7d)</th><th>CTL (28d)</th><th>ACWR</th><th>Sessions/7d</th><th>Wellbeing</th><th>AI Recommendation</th></tr></thead>
+        <tbody>
+          <tr style="background:#fff9f9">
+            <td><strong>Kavindu Perera</strong></td><td>Athletics / SLC</td><td>24</td>
+            <td style="color:#b91c1c"><strong>540</strong></td><td>320</td><td style="color:#b91c1c;font-weight:800">1.69 🔴</td><td>5</td>
+            <td><span class="score-badge score-amber">6/10</span></td>
+            <td style="font-size:.58rem;color:#b91c1c">Mandatory 3-day rest. Reduce load by 30% for 1 week.</td>
+          </tr>
+          <tr style="background:#fff9f9">
+            <td><strong>Ruwandi Fernando</strong></td><td>Swimming / SLS</td><td>21</td>
+            <td style="color:#b91c1c"><strong>490</strong></td><td>310</td><td style="color:#b91c1c;font-weight:800">1.58 🔴</td><td>6</td>
+            <td><span class="score-badge score-amber">7/10</span></td>
+            <td style="font-size:.58rem;color:#b91c1c">Acute spike detected. Check shoulder mobility. Reduce session count.</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Caution zone -->
+      <div style="font-size:.7rem;font-weight:700;color:#b45309;margin-bottom:6px;border-bottom:1.5px solid #f59e0b;padding-bottom:4px">Section 2 — Caution Zone Athletes (ACWR 1.3–1.5) — Monitor Closely</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead><tr><th>Athlete</th><th>Sport / Fed.</th><th>Age</th><th>ATL</th><th>CTL</th><th>ACWR</th><th>Sessions/7d</th><th>Wellbeing</th><th>AI Recommendation</th></tr></thead>
+        <tbody>
+          <tr style="background:#fffdf5">
+            <td><strong>Amila Senanayake</strong></td><td>Badminton / SLB</td><td>26</td>
+            <td>410</td><td>295</td><td style="color:#b45309;font-weight:800">1.39 🟡</td><td>4</td>
+            <td><span class="score-badge score-green">8/10</span></td>
+            <td style="font-size:.58rem;color:#b45309">Hold load steady. No further increase this week.</td>
+          </tr>
+          <tr style="background:#fffdf5">
+            <td><strong>Nirmala Wickramasinghe</strong></td><td>Volleyball / SLV</td><td>23</td>
+            <td>380</td><td>276</td><td style="color:#b45309;font-weight:800">1.38 🟡</td><td>4</td>
+            <td><span class="score-badge score-red">5/10</span></td>
+            <td style="font-size:.58rem;color:#b45309">Wellbeing drop — wellness check-in. Consider load reduction.</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- All athletes summary -->
+      <div style="font-size:.7rem;font-weight:700;color:#15803d;margin-bottom:6px;border-bottom:1.5px solid #22c55e;padding-bottom:4px">Section 3 — All Athletes ACWR Summary</div>
+      <table class="mini-table" style="margin-bottom:10px">
+        <thead><tr><th>Athlete</th><th>Sport</th><th>ACWR</th><th>Status</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td>Tharushi Dissanayake</td><td>Athletics</td><td><strong>1.02</strong></td><td><span class="score-badge score-green">Optimal</span></td><td style="color:#15803d;font-size:.6rem">→ Stable</td></tr>
+          <tr><td>Kasun Jayasuriya</td><td>Athletics</td><td><strong>0.95</strong></td><td><span class="score-badge score-green">Optimal</span></td><td style="color:#15803d;font-size:.6rem">↗ Improving</td></tr>
+          <tr><td>Dilshan Madushanka</td><td>Badminton</td><td><strong>1.18</strong></td><td><span class="score-badge score-green">Optimal</span></td><td style="color:#15803d;font-size:.6rem">→ Stable</td></tr>
+          <tr><td>Sachini Perera</td><td>Swimming</td><td><strong>0.88</strong></td><td><span class="score-badge score-green">Optimal</span></td><td style="color:#15803d;font-size:.6rem">↗ Improving</td></tr>
+          <tr><td colspan="5" style="font-size:.58rem;color:#94a3b8;text-align:center;font-style:italic">... 34 more athletes in optimal zone ...</td></tr>
+        </tbody>
+      </table>
+      <div class="export-btn-row">
+        <span class="exp-btn exp-word">📄 Download Full Word Report</span>
+        <span class="exp-btn exp-pdf" style="color:#b91c1c;border-color:#fecaca">🔴 View HTML Report</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT 4: Performance Trend -->
+<h3>Report 4 — Performance Trend Report</h3>
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/reports/html/performance &nbsp;· Audience: Head Coaches, Federation Officers</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div class="report-cover-mini" style="background:linear-gradient(135deg,#065f46,#059669)">
+      <div class="rc-org">National Olympic Committee of Sri Lanka · SLSIE v1.0</div>
+      <div class="rc-title">Athlete Performance Trend Report — 2025 Season</div>
+      <div class="rc-meta">Generated: 20 May 2026 &nbsp;|&nbsp; Period: Jan–May 2025 &nbsp;|&nbsp; All National Programme Athletes</div>
+    </div>
+    <div style="background:#fff;padding:12px">
+      <div class="ai-summary-box" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border-color:#bbf7d0">
+        <div class="ai-sum-icon" style="background:linear-gradient(135deg,#059669,#065f46)">✦</div>
+        <div>
+          <div class="ai-sum-label">AI Executive Summary</div>
+          <div class="ai-sum-text">Across 47 tracked athletes, 68% demonstrated measurable performance improvement in at least one key metric over the Jan–May period. Sprint performance improved by an average of 1.8% across Athletics athletes. Vertical jump averages increased 4.2cm. Tharushi Dissanayake leads all-round improvement, improving 100m PB by 0.20s and vertical jump by 3cm in two months.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">
+        <div class="mini-panel">
+          <div class="mini-panel-hdr">Performance Improvement — Recent Tests</div>
+          <div class="mini-panel-body" style="padding:6px">
+            <table class="mini-table">
+              <thead><tr><th>Athlete</th><th>Test</th><th>Change</th></tr></thead>
+              <tbody>
+                <tr><td>T. Dissanayake</td><td>100m Sprint</td><td style="color:#15803d"><strong>▲ −0.20s</strong></td></tr>
+                <tr><td>K. Jayasuriya</td><td>Vertical Jump</td><td style="color:#15803d"><strong>▲ +5cm</strong></td></tr>
+                <tr><td>R. Fernando</td><td>200m Freestyle</td><td style="color:#15803d"><strong>▲ −1.2s</strong></td></tr>
+                <tr><td>A. Senanayake</td><td>Smash Speed</td><td style="color:#b91c1c"><strong>▼ −3 km/h</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="mini-panel">
+          <div class="mini-panel-hdr">Sport-wise Improvement Rate</div>
+          <div class="mini-panel-body">
+            <div style="font-size:.62rem;display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;align-items:center;gap:6px"><span style="min-width:70px;color:#475569">Athletics</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:78%;background:#22c55e"></div></div><span style="font-size:.6rem;color:#15803d;font-weight:700">78%</span></div>
+              <div style="display:flex;align-items:center;gap:6px"><span style="min-width:70px;color:#475569">Swimming</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:72%;background:#22c55e"></div></div><span style="font-size:.6rem;color:#15803d;font-weight:700">72%</span></div>
+              <div style="display:flex;align-items:center;gap:6px"><span style="min-width:70px;color:#475569">Badminton</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:55%;background:#f59e0b"></div></div><span style="font-size:.6rem;color:#b45309;font-weight:700">55%</span></div>
+              <div style="display:flex;align-items:center;gap:6px"><span style="min-width:70px;color:#475569">Volleyball</span><div class="load-bar" style="flex:1"><div class="load-fill" style="width:60%;background:#f59e0b"></div></div><span style="font-size:.6rem;color:#b45309;font-weight:700">60%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="export-btn-row">
+        <span class="exp-btn exp-word">📄 Download Word Report</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT 5: Fit for Life -->
+<h3>Report 5 — Fit for Life Programme Report</h3>
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/reports/html/fitforlife &nbsp;· Audience: IOC, Ministry of Sports, Donors</span>
+  </div>
+  <div style="background:#fff">
+    <div class="report-cover-mini" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)">
+      <div class="rc-org">National Olympic Committee of Sri Lanka · IOC Fit for Life Programme</div>
+      <div class="rc-title">Fit for Life 2025 — Community Sports Programme Report</div>
+      <div class="rc-meta">Generated: 20 May 2026 &nbsp;|&nbsp; IOC Fit for Life 2025–2035 Framework &nbsp;|&nbsp; Annual Progress Report</div>
+    </div>
+    <div style="padding:14px">
+      <div class="ai-summary-box" style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border-color:#c4b5fd">
+        <div class="ai-sum-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)">✦</div>
+        <div>
+          <div class="ai-sum-label">AI Executive Summary — SLSIE Intelligence Engine</div>
+          <div class="ai-sum-text">The Fit for Life 2025 programme has reached 47 community participants across 8 of 9 provinces, logging 312 sessions and 428 activity hours. Average BMI of 22.8 indicates healthy body composition. Mental wellbeing scores averaged 8.1/10, exceeding the IOC target of 7.0. Northern Province remains underrepresented with 0 participants — targeted outreach recommended for 2026. Female participation at 44.7% meets the IOC minimum of 40%.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0">
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.9rem">47</div><div class="kpi-label">Participants</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">8/9</div><div class="kpi-label">Provinces</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.9rem">312</div><div class="kpi-label">Sessions</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">8.1</div><div class="kpi-label">Wellbeing/10</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">22.8</div><div class="kpi-label">Avg BMI</div></div>
+      </div>
+      <!-- Provincial table -->
+      <div style="font-size:.7rem;font-weight:700;color:#7c3aed;margin-bottom:6px;border-bottom:1.5px solid #7c3aed;padding-bottom:4px">Section 1 — Participants by Province</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead><tr><th>Province</th><th>Participants</th><th>% Share</th><th>Female</th><th>Avg BMI</th><th>Avg Wellbeing</th><th>Avg Sleep</th><th>Sessions</th><th>Hours</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Western</strong></td><td><strong>14</strong></td><td>29.8%</td><td>7 (50%)</td><td>22.4</td><td style="color:#15803d">8.5</td><td>7.4</td><td>89</td><td>118h</td></tr>
+          <tr><td>Southern</td><td><strong>9</strong></td><td>19.1%</td><td>4 (44%)</td><td>23.1</td><td style="color:#15803d">8.2</td><td>7.1</td><td>58</td><td>78h</td></tr>
+          <tr><td>Central</td><td><strong>7</strong></td><td>14.9%</td><td>3 (43%)</td><td>22.9</td><td>7.8</td><td>7.0</td><td>44</td><td>62h</td></tr>
+          <tr><td>Sabaragamuwa</td><td><strong>6</strong></td><td>12.8%</td><td>2 (33%)</td><td>23.5</td><td>7.6</td><td>6.9</td><td>38</td><td>52h</td></tr>
+          <tr><td>North Western</td><td><strong>4</strong></td><td>8.5%</td><td>2 (50%)</td><td>22.2</td><td>8.0</td><td>7.3</td><td>26</td><td>36h</td></tr>
+          <tr><td>Eastern</td><td><strong>3</strong></td><td>6.4%</td><td>1 (33%)</td><td>23.0</td><td>7.5</td><td>7.0</td><td>20</td><td>28h</td></tr>
+          <tr><td>North Central</td><td><strong>2</strong></td><td>4.3%</td><td>1 (50%)</td><td>22.8</td><td>7.9</td><td>7.2</td><td>14</td><td>20h</td></tr>
+          <tr><td>Uva</td><td><strong>2</strong></td><td>4.3%</td><td>1 (50%)</td><td>23.2</td><td>7.7</td><td>6.8</td><td>23</td><td>34h</td></tr>
+          <tr style="background:#fff9f9"><td style="color:#b91c1c">Northern</td><td style="color:#b91c1c"><strong>0</strong></td><td style="color:#b91c1c">0%</td><td>—</td><td>—</td><td>—</td><td>—</td><td>0</td><td>0h</td></tr>
+          <tr style="background:#f8faff;font-weight:700"><td><strong>TOTAL</strong></td><td><strong>47</strong></td><td>100%</td><td>21 (44.7%)</td><td><strong>22.8</strong></td><td style="color:#15803d"><strong>8.1</strong></td><td><strong>7.2</strong></td><td><strong>312</strong></td><td><strong>428h</strong></td></tr>
+        </tbody>
+      </table>
+      <!-- Sports distribution -->
+      <div style="font-size:.7rem;font-weight:700;color:#7c3aed;margin-bottom:6px;border-bottom:1.5px solid #7c3aed;padding-bottom:4px">Section 2 — Activity by Sport</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead><tr><th>Sport</th><th>Participants</th><th>Sessions</th><th>Hours</th><th>Avg Wellbeing</th></tr></thead>
+        <tbody>
+          <tr><td>Athletics</td><td><strong>12</strong></td><td>82</td><td>110h</td><td style="color:#15803d">8.4</td></tr>
+          <tr><td>Swimming</td><td><strong>9</strong></td><td>67</td><td>95h</td><td>8.0</td></tr>
+          <tr><td>Badminton</td><td><strong>8</strong></td><td>54</td><td>68h</td><td>7.9</td></tr>
+          <tr><td>Volleyball</td><td><strong>7</strong></td><td>48</td><td>62h</td><td>8.1</td></tr>
+          <tr><td>Netball</td><td><strong>6</strong></td><td>38</td><td>50h</td><td>7.8</td></tr>
+          <tr><td>Other (5 sports)</td><td><strong>5</strong></td><td>23</td><td>43h</td><td>7.6</td></tr>
+        </tbody>
+      </table>
+      <!-- IOC targets check -->
+      <div style="font-size:.7rem;font-weight:700;color:#7c3aed;margin-bottom:6px;border-bottom:1.5px solid #7c3aed;padding-bottom:4px">Section 3 — IOC Fit for Life Target Compliance</div>
+      <table class="mini-table" style="margin-bottom:10px">
+        <thead><tr><th>IOC KPI Target</th><th>Target</th><th>Achieved</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Avg sessions per participant/month</td><td>≥4</td><td>5.2</td><td><span class="score-badge score-green">✓ MET</span></td></tr>
+          <tr><td>Average BMI in healthy range</td><td>18.5–24.9</td><td>22.8</td><td><span class="score-badge score-green">✓ MET</span></td></tr>
+          <tr><td>Average mental wellbeing score</td><td>≥7.0/10</td><td>8.1</td><td><span class="score-badge score-green">✓ MET</span></td></tr>
+          <tr><td>Female participation rate</td><td>≥40%</td><td>44.7%</td><td><span class="score-badge score-green">✓ MET</span></td></tr>
+          <tr><td>Provincial coverage</td><td>All 9 provinces</td><td>8/9</td><td><span class="score-badge score-amber">⚡ PARTIAL</span></td></tr>
+          <tr><td>Sport diversity per province</td><td>≥5 sports</td><td>7 sports</td><td><span class="score-badge score-green">✓ MET</span></td></tr>
+          <tr><td>Average sleep quality score</td><td>≥7.0/10</td><td>7.2</td><td><span class="score-badge score-green">✓ MET</span></td></tr>
+        </tbody>
+      </table>
+      <div class="export-btn-row">
+        <span class="exp-btn exp-word">📄 Download Full Word Report</span>
+        <span class="exp-btn exp-pdf" style="color:#7c3aed;border-color:#c4b5fd">🔵 View HTML Report</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT 6: Donor Impact -->
+<h3>Report 6 — Donor Impact Report</h3>
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/reports/html/donor &nbsp;· Audience: UNDP, International Sponsors, Grant Bodies</span>
+  </div>
+  <div style="background:#fff">
+    <div class="report-cover-mini" style="background:linear-gradient(135deg,#0f766e,#0d9488)">
+      <div class="rc-org">National Olympic Committee of Sri Lanka · Donor &amp; Partner Reporting</div>
+      <div class="rc-title">NOCSL Programme Impact Report — 2025</div>
+      <div class="rc-meta">Generated: 20 May 2026 &nbsp;|&nbsp; Prepared for: UNDP Sri Lanka &amp; International Partners &nbsp;|&nbsp; Restricted</div>
+    </div>
+    <div style="padding:14px">
+      <div class="ai-summary-box" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-color:#99f6e4">
+        <div class="ai-sum-icon" style="background:linear-gradient(135deg,#0f766e,#0d9488)">✦</div>
+        <div>
+          <div class="ai-sum-label">AI Executive Summary — SLSIE Intelligence Engine</div>
+          <div class="ai-sum-text">NOCSL's 2025 programmes have directly benefited 94 individuals — 47 national athletes and 47 community participants — across 34 federations and 8 provinces. Governance quality improved 12% year-on-year (3.41→3.82), with 8 federations achieving top Green status. The Fit for Life programme exceeded 6 of 7 IOC KPI targets. These outcomes demonstrate measurable return on investment for donor-supported institutional strengthening and community sport development.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0">
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.9rem">94</div><div class="kpi-label">Total Beneficiaries</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="font-size:.9rem">34</div><div class="kpi-label">Federations</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">8/9</div><div class="kpi-label">Provinces</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">+12%</div><div class="kpi-label">Gov. Improvement</div></div>
+        <div class="kpi-card green"><div class="kpi-val" style="font-size:.9rem">6/7</div><div class="kpi-label">IOC KPIs Met</div></div>
+      </div>
+      <!-- Year on year -->
+      <div style="font-size:.7rem;font-weight:700;color:#0f766e;margin-bottom:6px;border-bottom:1.5px solid #0d9488;padding-bottom:4px">Section 1 — Year-on-Year Programme Growth</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead><tr><th>Indicator</th><th>2023</th><th>2024</th><th>2025</th><th>Change (2yr)</th></tr></thead>
+        <tbody>
+          <tr><td>National athletes monitored</td><td>12</td><td>31</td><td><strong>47</strong></td><td style="color:#15803d"><strong>+292%</strong></td></tr>
+          <tr><td>Fit for Life participants</td><td>0</td><td>18</td><td><strong>47</strong></td><td style="color:#15803d"><strong>+161%</strong></td></tr>
+          <tr><td>Federations with governance data</td><td>6</td><td>12</td><td><strong>18</strong></td><td style="color:#15803d"><strong>+200%</strong></td></tr>
+          <tr><td>Avg governance score</td><td>3.10</td><td>3.41</td><td><strong>3.82</strong></td><td style="color:#15803d"><strong>+23%</strong></td></tr>
+          <tr><td>Provinces covered (Fit for Life)</td><td>—</td><td>4</td><td><strong>8</strong></td><td style="color:#15803d"><strong>+100%</strong></td></tr>
+          <tr><td>Activity sessions logged</td><td>—</td><td>124</td><td><strong>312</strong></td><td style="color:#15803d"><strong>+152%</strong></td></tr>
+        </tbody>
+      </table>
+      <!-- SDG alignment -->
+      <div style="font-size:.7rem;font-weight:700;color:#0f766e;margin-bottom:6px;border-bottom:1.5px solid #0d9488;padding-bottom:4px">Section 2 — SDG Alignment Evidence</div>
+      <table class="mini-table" style="margin-bottom:12px">
+        <thead><tr><th>SDG Goal</th><th>NOCSL Activity</th><th>Measurable Outcome 2025</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SDG 3 — Good Health &amp; Wellbeing</strong></td><td>Fit for Life health monitoring, athlete injury prevention</td><td>Avg BMI 22.8 (healthy), Wellbeing 8.1/10, 4 high-risk injuries prevented</td></tr>
+          <tr><td><strong>SDG 5 — Gender Equality</strong></td><td>Gazette gender quota enforcement, female athlete support</td><td>44.7% female Fit for Life participants; 25 federations meeting gender quota</td></tr>
+          <tr><td><strong>SDG 10 — Reduced Inequalities</strong></td><td>Provincial community sport expansion</td><td>8 of 9 provinces reached; rural communities included in Western, Central, Sabaragamuwa</td></tr>
+          <tr><td><strong>SDG 16 — Strong Institutions</strong></td><td>Gazette compliance enforcement, governance benchmarking</td><td>22/34 federations fully compliant; sector governance up 12% year-on-year</td></tr>
+          <tr><td><strong>SDG 17 — Partnerships</strong></td><td>IOC reporting, Ministry collaboration, digital platform</td><td>SLSIE platform enabling real-time data sharing with IOC and Ministry of Sports</td></tr>
+        </tbody>
+      </table>
+      <!-- Cost per beneficiary -->
+      <div style="font-size:.7rem;font-weight:700;color:#0f766e;margin-bottom:6px;border-bottom:1.5px solid #0d9488;padding-bottom:4px">Section 3 — Programme Efficiency Indicators</div>
+      <table class="mini-table" style="margin-bottom:10px">
+        <thead><tr><th>Programme Area</th><th>Investment (est.)</th><th>Beneficiaries</th><th>Cost per Beneficiary</th></tr></thead>
+        <tbody>
+          <tr><td>Fit for Life community programme</td><td>LKR 2.4M</td><td>47 participants</td><td style="color:#15803d"><strong>LKR 51,000</strong></td></tr>
+          <tr><td>National athlete monitoring</td><td>LKR 1.8M</td><td>47 athletes</td><td style="color:#15803d"><strong>LKR 38,300</strong></td></tr>
+          <tr><td>Federation governance support</td><td>LKR 3.2M</td><td>34 federations</td><td style="color:#15803d"><strong>LKR 94,100</strong></td></tr>
+          <tr style="background:#f0fdf4;font-weight:700"><td>SLSIE platform (digital infrastructure)</td><td>LKR 180,000/yr</td><td>All programmes</td><td style="color:#15803d"><strong>LKR 1,915/beneficiary</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="export-btn-row">
+        <span class="exp-btn exp-word">📄 Download Full Word Report</span>
+        <span class="exp-btn exp-pdf" style="color:#0f766e;border-color:#99f6e4">🟢 View HTML Report</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Six reports covering every stakeholder audience — NOCSL Board, Ministry of Sports, IOC, UNDP/donors, coaches, and federation officers — all generated in under 5 seconds</li>
+    <li>AI executive summary on each report means senior officials can brief themselves without reading full data tables</li>
+    <li>Word download enables reports to be included directly in board packs, Ministry submissions, and donor progress reviews</li>
+    <li>Donor Impact Report previously required 2–3 weeks of manual compilation before each UNDP review — now available instantly at any time</li>
+    <li>Role-based report access — donors only see impact data; federation officers only see their own federation's report; Ministry sees all</li>
+    <li>SDG alignment evidence built into the Donor Impact Report — no separate compilation required for international reporting obligations</li>
+  </ul>
+</div>
+
+<!-- ─── 10 CHATBOT ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 10</div>
+<h2>AI Assistant Chatbot</h2>
+
+<p>The SLSIE Intelligence chatbot is a natural-language interface connected to the live platform database. Users can ask any question about federations, athletes, compliance status, governance scores, or programme data and receive instant, data-accurate answers — with tabular responses that can be exported to Excel, PDF, or Word.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app — AI Chat Panel (bottom-right ✦ button)</span>
+  </div>
+  <div style="padding:20px;background:#f8fafc;display:flex;justify-content:center">
+    <div class="chatbot-preview">
+      <div class="chat-head">
+        <div class="chat-avatar">✦</div>
+        <div><div class="chat-name">SLSIE Intelligence</div><div class="chat-status">● AI Assistant — Live Data Connected</div></div>
+      </div>
+      <div class="chat-msgs">
+        <div style="display:flex"><div class="chat-bubble chat-ai-b">Hello! I'm the SLSIE AI assistant. Ask me about federations, athletes, compliance, or governance data.</div></div>
+        <div style="display:flex;justify-content:flex-end"><div class="chat-bubble chat-user-b">Which athletes are at high injury risk?</div></div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div class="chat-bubble chat-ai-b" style="max-width:100%">
+            <div style="margin-bottom:5px;font-size:.65rem">4 athletes currently have ACWR above 1.5 — the injury danger threshold:</div>
+            <div class="export-btn-row">
+              <span class="exp-btn exp-excel">🟢 Excel</span>
+              <span class="exp-btn exp-pdf">🔴 PDF</span>
+              <span class="exp-btn exp-word">🔵 Word</span>
+            </div>
+            <table class="chat-tbl">
+              <thead><tr><th>Athlete</th><th>Sport</th><th>ACWR</th><th>Risk</th></tr></thead>
+              <tbody>
+                <tr><td>Hasini A.</td><td>Badminton</td><td>1.60</td><td style="color:#b91c1c;font-weight:700">HIGH</td></tr>
+                <tr><td>Akila Perera</td><td>Karate</td><td>1.56</td><td style="color:#b91c1c;font-weight:700">HIGH</td></tr>
+                <tr><td>Dinesh C.</td><td>Cricket</td><td>1.53</td><td style="color:#b91c1c;font-weight:700">HIGH</td></tr>
+                <tr><td>Nuwan P.</td><td>Judo</td><td>1.53</td><td style="color:#b91c1c;font-weight:700">HIGH</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <div class="chat-input" style="color:#94a3b8">Ask about federations, athletes, compliance…</div>
+        <div class="chat-send">➤</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Table Export Capabilities</h3>
+<p>Every table returned by the AI chatbot includes one-click export buttons. All exports include the user's original question as the report title.</p>
+<table class="rtable">
+  <thead><tr><th>Format</th><th>Output</th><th>Contents</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Excel (.xlsx)</strong></td><td>Spreadsheet file</td><td>User query, generation date, NOCSL header, data table with column widths</td></tr>
+    <tr><td><strong>PDF</strong></td><td>Print dialog → PDF</td><td>NOCSL branded cover, blue query callout box, styled data table, footer</td></tr>
+    <tr><td><strong>Word (.doc)</strong></td><td>Word document</td><td>NOCSL header, query title, professionally formatted table — fully editable</td></tr>
+  </tbody>
+</table>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Any authorised user can get data insights without needing to know where to find them in the system</li>
+    <li>Answers are always based on live database — no risk of receiving stale or manually compiled figures</li>
+    <li>Table export means ad-hoc chat queries can be turned into formal reports in one click</li>
+    <li>Reduces the number of routine data requests sent to NOCSL administrative staff</li>
+    <li>Expandable panel (⤢ button) for comfortable reading of large tables on any screen size</li>
+  </ul>
+</div>
+
+<!-- ─── 11 AI INSIGHTS ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 11</div>
+<h2>AI Coaching & Governance Insights</h2>
+
+<p>Beyond the chatbot, SLSIE embeds contextual AI analysis directly into federation and athlete profile pages. These insights are generated fresh on every page load using the Anthropic Claude API, analysing the actual data for that specific record.</p>
+
+<h3>AI Coaching Insight — Athlete Profile</h3>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/athlete/3 — AI Coaching Insight panel</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div class="mini-panel">
+      <div class="mini-panel-hdr">✦ AI Coaching Insight</div>
+      <div class="mini-panel-body">
+        <div class="ai-panel">
+          <div class="ai-panel-hdr">
+            <div class="ai-icon">✦</div>
+            <div class="ai-label">AI Analysis · SLSIE Intelligence Engine</div>
+          </div>
+          <div class="ai-text">
+            <strong>Key Finding:</strong> Tharushi demonstrates excellent sprint progression (+0.64s improvement over 5 months) with optimal biometrics and outstanding mental wellbeing (9/10), indicating strong training adaptation and readiness for competition.<br><br>
+            <strong>Recommendation:</strong> Increase acute training load strategically while maintaining her current 7hrs sleep — consider one additional tempo or VO2max session to sustain CTL gains without acute-chronic imbalance, targeting ACWR 0.85–1.0 for the next 2 weeks.<br><br>
+            <strong>Wellness Note:</strong> Sleep quality at 7/10 and stress at 4/10 are moderate concerns that may compound with higher training variance — prioritise 8+ hours and active recovery days on high-load weeks.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>AI Governance Analysis — Federation Profile</h3>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/federation/1 — AI Governance Analysis panel</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div class="mini-panel">
+      <div class="mini-panel-hdr">✦ AI Governance Analysis</div>
+      <div class="mini-panel-body">
+        <div class="ai-panel">
+          <div class="ai-panel-hdr">
+            <div class="ai-icon">✦</div>
+            <div class="ai-label">AI Analysis · SLSIE Intelligence Engine</div>
+          </div>
+          <div class="ai-text">
+            <strong>Strengths & Status:</strong> Sri Lanka Cricket demonstrates robust governance maturity with a 4.50/5.0 score and an exceptional +0.40 year-on-year improvement — Financial Transparency (4.7) and Regulatory Compliance (4.8) are the federation's strongest dimensions.<br><br>
+            <strong>Critical Gap & Risk:</strong> The gender quota failure (1 female EC member vs the required minimum of 2) represents the federation's only outstanding gazette compliance issue and creates legal exposure under Gazette No. 2437/24 regulations.<br><br>
+            <strong>Priority Action for NOCSL:</strong> Issue a formal notice to Sri Lanka Cricket requiring appointment of at least one additional female EC member before the next AGM to achieve full 5/5 gazette compliance.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value</h4>
+  <ul>
+    <li>Coaches receive instant, data-driven recommendations without requiring sports science expertise</li>
+    <li>Governance officers receive specific, actionable advice — not just raw scores — after each assessment cycle</li>
+    <li>AI insights load asynchronously — pages appear immediately with insights filling in within 2–3 seconds</li>
+    <li>Every insight is unique — generated from actual data, not template text</li>
+    <li>Structured format (Key Finding / Recommendation / Action) ensures insights are always actionable</li>
+  </ul>
+</div>
+
+<!-- ─── 12 TECH ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 12</div>
+<h2>Production System Architecture</h2>
+
+<p>The current SLSIE platform is a fully functional proof-of-concept that demonstrates the complete feature set. The production system — designed to serve all 34 federations, hundreds of athletes, and multiple concurrent government users reliably — requires a scaled, enterprise-grade architecture. This section describes how SLSIE would be built for full national deployment.</p>
+
+<div class="info-box">
+  <strong>Design Principle:</strong> The production architecture is designed around three requirements — (1) <strong>reliability</strong>: the system must be available 99.9% of the time including during election periods, Ministry reviews, and international events; (2) <strong>security</strong>: athlete health data and federation governance data are sensitive and must meet Sri Lanka data protection standards; (3) <strong>scalability</strong>: the system must be able to grow from 34 federations to 100+ without re-architecture.
+</div>
+
+<!-- Architecture diagram -->
+<h3>System Architecture Overview</h3>
+<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:20px;margin:12px 0 20px;font-size:.72rem">
+  <!-- Layer 1: Client -->
+  <div style="text-align:center;margin-bottom:8px">
+    <div style="display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <div style="background:#1F4E79;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700">🌐 Web Browser</div>
+      <div style="background:#1F4E79;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700">📱 iOS App</div>
+      <div style="background:#1F4E79;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700">📱 Android App</div>
+    </div>
+    <div style="color:#94a3b8;margin:4px 0">↓ HTTPS / TLS 1.3</div>
+  </div>
+  <!-- Layer 2: CDN + WAF -->
+  <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px;text-align:center;margin-bottom:6px">
+    <span style="font-weight:700;color:#1d4ed8">CDN (CloudFront / Azure CDN)</span> &nbsp;+&nbsp; <span style="font-weight:700;color:#1d4ed8">WAF — Web Application Firewall</span>
+    <div style="font-size:.62rem;color:#475569;margin-top:3px">Static asset caching · DDoS protection · Rate limiting · Bot filtering</div>
+  </div>
+  <div style="color:#94a3b8;text-align:center;margin:3px 0">↓</div>
+  <!-- Layer 3: Load Balancer -->
+  <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:8px;text-align:center;margin-bottom:6px">
+    <span style="font-weight:700;color:#1d4ed8">Load Balancer (AWS ALB / Azure Load Balancer)</span>
+    <div style="font-size:.62rem;color:#475569;margin-top:3px">Distributes traffic across API server instances · Health checks · Auto-scaling triggers</div>
+  </div>
+  <div style="color:#94a3b8;text-align:center;margin:3px 0">↓</div>
+  <!-- Layer 4: Application servers -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#15803d;margin-bottom:4px">⚙️ Frontend Server (React / Next.js)</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">Server-side rendered pages · Role-based routing · Offline-capable PWA · Mobile-responsive · Auto-scales to 2–10 instances</div>
+    </div>
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#15803d;margin-bottom:4px">🔌 API Server (Node.js / Express)</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">REST API endpoints · JWT authentication · Role-based access middleware · Report generation · AI integration layer · Auto-scales to 2–8 instances</div>
+    </div>
+  </div>
+  <div style="color:#94a3b8;text-align:center;margin:3px 0">↓</div>
+  <!-- Layer 5: Data + AI -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">
+    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#b45309;margin-bottom:4px">🗃️ PostgreSQL Database</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">Primary RDBMS · Multi-region replication · Automated daily backups · Managed service (AWS RDS / Azure Database)</div>
+    </div>
+    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#b45309;margin-bottom:4px">⚡ Redis Cache</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">Session management · API response caching · Real-time notifications · Rate limiting counters</div>
+    </div>
+    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#b45309;margin-bottom:4px">🤖 Anthropic Claude API</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">Chatbot · Athlete coaching insights · Federation governance analysis · Report narrative generation</div>
+    </div>
+  </div>
+  <!-- Layer 6: Storage + Integrations -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#7c3aed;margin-bottom:4px">☁️ Object Storage (AWS S3 / Azure Blob)</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">Generated reports (PDF/Word) · Uploaded documents · Static assets · Audit log archives</div>
+    </div>
+    <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:10px">
+      <div style="font-weight:700;color:#7c3aed;margin-bottom:4px">🔗 External Integrations</div>
+      <div style="font-size:.62rem;color:#475569;line-height:1.5">Ministry of Sports data exchange · IOC reporting API · Email (SendGrid) · SMS alerts (Twilio) · WADA anti-doping interface</div>
+    </div>
+  </div>
+</div>
+
+<h3>Production Technology Stack</h3>
+<table class="rtable">
+  <thead><tr><th>Layer</th><th>Production Technology</th><th>Why This Choice</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Frontend</strong></td><td>React.js + Next.js 14 (SSR)</td><td>Server-side rendering for fast initial load; SEO-ready; component-based for maintainability; strong ecosystem</td></tr>
+    <tr><td><strong>Mobile Apps</strong></td><td>React Native (iOS &amp; Android)</td><td>Single codebase for both platforms; reuses frontend logic; supports offline data collection in provinces with poor connectivity</td></tr>
+    <tr><td><strong>Backend API</strong></td><td>Node.js v22 + Express.js</td><td>Proven for REST APIs; large ecosystem; team expertise matches existing codebase; horizontal scaling via container instances</td></tr>
+    <tr><td><strong>Database</strong></td><td>PostgreSQL 16 (managed)</td><td>Enterprise-grade relational database; ACID compliance; complex query support; row-level security for federation data isolation; 99.99% SLA on managed services</td></tr>
+    <tr><td><strong>Cache / Sessions</strong></td><td>Redis 7 (managed)</td><td>Sub-millisecond session lookups; prevents repeated expensive DB queries; enables real-time notifications</td></tr>
+    <tr><td><strong>Authentication</strong></td><td>JWT + OAuth 2.0</td><td>Stateless authentication scales horizontally; OAuth enables future SSO integration with Ministry of Sports identity systems</td></tr>
+    <tr><td><strong>File Storage</strong></td><td>AWS S3 / Azure Blob Storage</td><td>Unlimited report storage; 11 nines of durability; pre-signed URLs for secure temporary document access</td></tr>
+    <tr><td><strong>AI Engine</strong></td><td>Anthropic Claude 3 Haiku / Sonnet API</td><td>State-of-the-art NLP; structured output support; cost-efficient at NOCSL scale (~$20–50/month at full load)</td></tr>
+    <tr><td><strong>Infrastructure</strong></td><td>Docker containers + Kubernetes (EKS/AKS)</td><td>Container isolation; auto-scaling based on demand; zero-downtime deployments; easy disaster recovery</td></tr>
+    <tr><td><strong>CDN</strong></td><td>AWS CloudFront / Azure CDN</td><td>Sub-100ms asset delivery across Sri Lanka; reduces server load; DDoS protection at network edge</td></tr>
+    <tr><td><strong>CI/CD</strong></td><td>GitHub Actions → Staging → Production</td><td>Every code change automatically tested and deployed; staging environment for user acceptance testing before production release</td></tr>
+    <tr><td><strong>Monitoring</strong></td><td>Datadog / AWS CloudWatch</td><td>Real-time performance metrics; error alerting; uptime monitoring; cost tracking</td></tr>
+  </tbody>
+</table>
+
+<h3>Security Architecture</h3>
+<table class="rtable">
+  <thead><tr><th>Security Layer</th><th>Implementation</th><th>What It Protects</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Transport Security</strong></td><td>TLS 1.3 on all connections; HSTS headers enforced</td><td>All data in transit — prevents eavesdropping on athlete health data and governance records</td></tr>
+    <tr><td><strong>Data Encryption at Rest</strong></td><td>AES-256 on all database columns containing PII; encrypted database volume</td><td>Athlete biometrics, personal details, health records stored securely even if storage is physically compromised</td></tr>
+    <tr><td><strong>Authentication</strong></td><td>JWT tokens (15 min expiry) + refresh tokens; MFA optional for NOCSL Admin and Ministry users</td><td>Prevents unauthorised access even if login credentials are stolen</td></tr>
+    <tr><td><strong>Authorisation</strong></td><td>Row-level security in PostgreSQL; API middleware enforces federation-scoped access</td><td>Federation A cannot query or read Federation B's data — enforced at database level, not just UI</td></tr>
+    <tr><td><strong>Web Application Firewall</strong></td><td>OWASP Top-10 rule set; SQL injection protection; rate limiting (100 req/min per user)</td><td>Automated attacks, scraping, and injection attempts blocked before reaching the application server</td></tr>
+    <tr><td><strong>Audit Logging</strong></td><td>Immutable audit trail: every data write logged with user ID, timestamp, IP address</td><td>Accountability — who changed which federation's compliance record and when; required for gazette legal defence</td></tr>
+    <tr><td><strong>Data Residency</strong></td><td>All data hosted in AWS Asia Pacific (Singapore) or local Sri Lanka data centre</td><td>Compliance with Sri Lanka data sovereignty requirements; data does not leave the region</td></tr>
+  </tbody>
+</table>
+
+<!-- ─── 13 SUMMARY ─── -->
+<div class="page-break"></div>
+<div class="section-num">Section 13</div>
+<h2>Business Value Summary</h2>
+
+<table class="rtable">
+  <thead><tr><th>Problem Solved</th><th>SLSIE Solution</th><th>Time Saved</th></tr></thead>
+  <tbody>
+    <tr><td>Governance reports compiled manually from email submissions</td><td>Automated governance benchmark with instant HTML/Word reports</td><td><strong>2 days → 5 seconds</strong></td></tr>
+    <tr><td>Gazette compliance checked annually by staff</td><td>Automatic 5-point compliance check for all 34 federations continuously</td><td><strong>Weeks → Real-time</strong></td></tr>
+    <tr><td>EC officer term limits tracked on spreadsheets</td><td>Automated term limit alerts with gazette-compliant thresholds</td><td><strong>Manual → Automatic</strong></td></tr>
+    <tr><td>Athlete injury risk identified only after injury</td><td>ACWR-based real-time injury risk monitoring with red alerts</td><td><strong>Reactive → Preventive</strong></td></tr>
+    <tr><td>Donor/Ministry data requests requiring days of compilation</td><td>6 live reports accessible by Ministry and donors 24/7</td><td><strong>Days → Instant</strong></td></tr>
+    <tr><td>No single source of truth for federation performance</td><td>Unified platform with data from all 34 federations, all athletes</td><td><strong>Fragmented → Unified</strong></td></tr>
+    <tr><td>Executive insights require senior staff analysis</td><td>AI-generated coaching and governance insights on every profile</td><td><strong>Days → Seconds</strong></td></tr>
+  </tbody>
+</table>
+
+<div style="background:linear-gradient(135deg,#1F4E79,#2E75B6);color:#fff;border-radius:12px;padding:22px 26px;margin-top:24px">
+  <div style="font-size:8pt;opacity:.65;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Platform Summary</div>
+  <div style="font-size:13pt;font-weight:800;line-height:1.4;margin-bottom:10px">SLSIE gives the National Olympic Committee of Sri Lanka something it has never had — a single, intelligent, real-time view of every federation, every athlete, and every compliance obligation.</div>
+  <div style="font-size:9pt;opacity:.8;line-height:1.6">It reduces weeks of manual work to seconds, flags problems before they become crises, and puts AI-powered insights in the hands of every coach, administrator, and official — at a monthly operating cost of under $5.</div>
+</div>
+
+<div class="doc-footer">
+  <span>SLSIE — Sri Lanka Sports Intelligence Ecosystem · Developed by Everpower for NOCSL</span>
+  <span>Confidential · Internal Use · 20 May 2026</span>
+</div>
+
+</div><!-- /wrap -->
+
+<div class="no-print" style="margin-top:20px;padding-bottom:20px">
+  <button class="print-btn" onclick="window.print()">🖨&nbsp; Save as PDF / Print</button>
+</div>
+
+</body>
+</html>
