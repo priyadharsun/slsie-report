@@ -204,6 +204,50 @@ table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
 /* ── FOOTER ── */
 .doc-footer { margin-top:48px; border-top:1px solid #e2e8f0; padding-top:10px; font-size:8pt; color:#94a3b8; display:flex; justify-content:space-between; }
 
+/* ── PHONE MOCKUP ── */
+.phone-wrap { display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; margin:14px 0 20px; }
+.phone-frame { width:195px; border:3px solid #1e293b; border-radius:26px; overflow:hidden; background:#fff; box-shadow:0 8px 28px rgba(0,0,0,.18); flex-shrink:0; }
+.phone-notch { background:#1e293b; height:18px; display:flex; align-items:center; justify-content:center; }
+.phone-notch-dot { width:40px; height:5px; background:rgba(255,255,255,.25); border-radius:10px; }
+.phone-status { background:#1e293b; color:rgba(255,255,255,.5); font-size:.45rem; display:flex; justify-content:space-between; padding:0 10px 4px; }
+.phone-screen { background:#f8fafc; min-height:320px; }
+.phone-app-hdr { background:linear-gradient(135deg,#1F4E79,#2E75B6); color:#fff; padding:10px 12px; display:flex; align-items:center; gap:8px; }
+.phone-app-hdr-icon { width:22px; height:22px; background:rgba(255,255,255,.2); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.65rem; flex-shrink:0; }
+.phone-app-hdr-title { font-size:.72rem; font-weight:800; }
+.phone-app-hdr-sub { font-size:.52rem; opacity:.75; }
+.phone-body { padding:10px; }
+.phone-card { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; margin-bottom:7px; }
+.phone-card-title { font-size:.62rem; font-weight:700; color:#1F4E79; margin-bottom:4px; }
+.phone-card-sub { font-size:.55rem; color:#64748b; }
+.phone-upload-row { display:flex; align-items:center; gap:6px; padding:5px 0; border-bottom:1px solid #f1f5f9; }
+.phone-upload-row:last-child { border-bottom:none; }
+.phone-upload-icon { width:18px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:.55rem; flex-shrink:0; }
+.phone-upload-label { flex:1; font-size:.58rem; color:#334155; }
+.phone-upload-status { font-size:.52rem; font-weight:700; }
+.phone-btn { background:linear-gradient(135deg,#1F4E79,#2E75B6); color:#fff; text-align:center; padding:8px; border-radius:8px; font-size:.65rem; font-weight:700; margin-top:8px; }
+.phone-btn-green { background:linear-gradient(135deg,#059669,#15803d); }
+.phone-section-lbl { font-size:.52rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:.5px; margin:8px 0 4px; }
+.device-row { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid #f1f5f9; }
+.device-row:last-child { border-bottom:none; }
+.device-icon { width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.75rem; flex-shrink:0; }
+.device-name { flex:1; font-size:.6rem; font-weight:600; color:#334155; }
+.device-status { font-size:.52rem; padding:1px 6px; border-radius:8px; font-weight:700; }
+.ds-conn { background:#dcfce7; color:#15803d; }
+.ds-disc { background:#f1f5f9; color:#64748b; }
+.sync-val { font-size:.75rem; font-weight:800; color:#1F4E79; }
+.sync-lbl { font-size:.52rem; color:#64748b; }
+.sync-src { font-size:.5rem; color:#15803d; font-style:italic; }
+
+/* ── WORKFLOW STEPS ── */
+.workflow-steps { display:flex; gap:0; align-items:stretch; margin:14px 0 20px; flex-wrap:wrap; }
+.wf-step { flex:1; min-width:180px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:0; padding:14px; position:relative; }
+.wf-step:first-child { border-radius:10px 0 0 10px; }
+.wf-step:last-child { border-radius:0 10px 10px 0; }
+.wf-step-num { width:24px; height:24px; border-radius:50%; background:#1F4E79; color:#fff; font-size:.65rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
+.wf-step-title { font-size:.75rem; font-weight:800; color:#1F4E79; margin-bottom:4px; }
+.wf-step-body { font-size:.63rem; color:#475569; line-height:1.55; }
+.wf-arrow { display:flex; align-items:center; padding:0 2px; color:#2E75B6; font-size:1rem; flex-shrink:0; }
+
 @media print {
   .no-print { display:none!important; }
   @page { margin:1cm 1.2cm; size:A4; }
@@ -266,8 +310,7 @@ table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
     <tr><td style="font-weight:700;color:#1F4E79">09</td><td>Reports Module</td></tr>
     <tr><td style="font-weight:700;color:#1F4E79">10</td><td>AI Assistant Chatbot</td></tr>
     <tr><td style="font-weight:700;color:#1F4E79">11</td><td>AI Coaching & Governance Insights</td></tr>
-    <tr><td style="font-weight:700;color:#1F4E79">12</td><td>Production System Architecture</td></tr>
-    <tr><td style="font-weight:700;color:#1F4E79">13</td><td>Business Value Summary</td></tr>
+    <tr><td style="font-weight:700;color:#1F4E79">12</td><td>Business Value Summary</td></tr>
   </tbody>
 </table>
 
@@ -299,10 +342,6 @@ table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
     <div class="vc-title">6 AI-Enhanced Reports</div>
     <div class="vc-body">Governance, compliance, athlete risk, performance, Fit for Life, and donor impact reports — generated in seconds with AI executive summaries.</div>
   </div>
-</div>
-
-<div class="info-box">
-  <strong>Technology Stack:</strong> Node.js v22 · Express.js · SQLite (node:sqlite built-in) · Anthropic Claude API · Bootstrap 5.3 · Chart.js 4.4 · SheetJS · Deployed on Render.com
 </div>
 
 <!-- ─── 02 LOGIN ─── -->
@@ -676,6 +715,297 @@ table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
     <li>Year-on-year score comparison shows whether NOCSL governance interventions are producing measurable results</li>
     <li>Ministry of Sports can request the full benchmark report at any time without NOCSL staff involvement — reducing administrative burden and improving transparency</li>
     <li>NOCSL can demonstrate governance progress to IOC and international partners using standardised, comparable data</li>
+  </ul>
+</div>
+
+<!-- ─── GOVERNANCE VALIDATION WORKFLOW ─── -->
+<div class="page-break"></div>
+<h3 style="font-size:12pt;font-weight:800;color:#1F4E79;border-bottom:2.5px solid #1F4E79;padding-bottom:8px;margin-bottom:14px">Governance Score Validation Workflow — Document Upload, Rule Engine &amp; Human Approval</h3>
+
+<p>Federation officers cannot manually enter their own governance scores. Instead, SLSIE uses a three-stage validated workflow: federations upload supporting documents via a mobile app, an AI-powered rule engine analyses the documents and recommends dimension scores, and a designated NOCSL committee member acts as human-in-the-loop to review and approve the final scores. This eliminates self-reported bias and ensures every score is evidence-backed.</p>
+
+<div class="info-box">
+  <strong>Why this matters:</strong> In many sports governance systems, federations self-report their scores — creating incentives to inflate ratings. SLSIE's document-driven workflow means a governance score of 4.5 in Financial Transparency can only be awarded if the federation has actually uploaded verified audited accounts that the rule engine confirms meet gazette standards. The human approver adds a final layer of accountability before any score is published on the benchmark.
+</div>
+
+<!-- Workflow steps diagram -->
+<div class="workflow-steps">
+  <div class="wf-step">
+    <div class="wf-step-num">1</div>
+    <div class="wf-step-title">📱 Mobile App — Document Upload</div>
+    <div class="wf-step-body">Federation officer logs into the SLSIE mobile app and uploads required evidence documents for each governance dimension — AGM minutes, audited financials, strategic plan, safeguarding policy, etc. Documents are securely transmitted to the SLSIE server for processing.</div>
+  </div>
+  <div class="wf-arrow">→</div>
+  <div class="wf-step">
+    <div class="wf-step-num">2</div>
+    <div class="wf-step-title">🤖 Rule Engine — AI Document Analysis</div>
+    <div class="wf-step-body">The SLSIE rule engine extracts key data points from each uploaded document — dates, officer names, financial figures, policy clauses — and cross-checks them against gazette requirements. The AI then recommends a score (1.0–5.0) per dimension with confidence level and evidence citations.</div>
+  </div>
+  <div class="wf-arrow">→</div>
+  <div class="wf-step">
+    <div class="wf-step-num">3</div>
+    <div class="wf-step-title">👤 Human-in-Loop — NOCSL Approval</div>
+    <div class="wf-step-body">A designated NOCSL Olympic Committee member receives an approval task. They review the uploaded documents alongside the AI-recommended scores, can override individual dimension scores with a written reason, and either approve or request revision. Only approved scores are published to the benchmark.</div>
+  </div>
+</div>
+
+<!-- Stage 1: Mobile App -->
+<h3>Stage 1 — Federation Mobile App: Document Upload</h3>
+<p>The SLSIE Federation App (iOS and Android) allows each federation officer to upload evidence documents for their annual governance assessment directly from their smartphone. The app shows exactly which documents are required for each dimension, flags missing items, and tracks submission status in real time.</p>
+
+<div class="phone-wrap">
+  <!-- Phone 1: Document Upload Screen -->
+  <div>
+    <div style="font-size:.68rem;font-weight:700;color:#1F4E79;margin-bottom:6px;text-align:center">Federation Officer View — Submit Documents</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-notch-dot"></div></div>
+      <div class="phone-status"><span>9:41 AM</span><span>●●● 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="phone-app-hdr">
+          <div class="phone-app-hdr-icon">🏛️</div>
+          <div><div class="phone-app-hdr-title">SLSIE Federation App</div><div class="phone-app-hdr-sub">SL Athletics · 2025 Governance Review</div></div>
+        </div>
+        <div class="phone-body">
+          <div class="phone-section-lbl">Required Documents — 5 of 8 uploaded</div>
+          <div class="phone-card">
+            <div class="phone-upload-row">
+              <div class="phone-upload-icon" style="background:#dcfce7">📄</div>
+              <span class="phone-upload-label">AGM Minutes 2025</span>
+              <span class="phone-upload-status" style="color:#15803d">✓ Uploaded</span>
+            </div>
+            <div class="phone-upload-row">
+              <div class="phone-upload-icon" style="background:#dcfce7">📄</div>
+              <span class="phone-upload-label">Audited Financial Statements</span>
+              <span class="phone-upload-status" style="color:#15803d">✓ Uploaded</span>
+            </div>
+            <div class="phone-upload-row">
+              <div class="phone-upload-icon" style="background:#dcfce7">📄</div>
+              <span class="phone-upload-label">Strategic Plan 2025–2027</span>
+              <span class="phone-upload-status" style="color:#15803d">✓ Uploaded</span>
+            </div>
+            <div class="phone-upload-row">
+              <div class="phone-upload-icon" style="background:#fef3c7">📄</div>
+              <span class="phone-upload-label">Safeguarding Policy</span>
+              <span class="phone-upload-status" style="color:#b45309">⬆ Tap to Upload</span>
+            </div>
+            <div class="phone-upload-row">
+              <div class="phone-upload-icon" style="background:#fef3c7">📄</div>
+              <span class="phone-upload-label">EC Election Minutes</span>
+              <span class="phone-upload-status" style="color:#b45309">⬆ Tap to Upload</span>
+            </div>
+            <div class="phone-upload-row">
+              <div class="phone-upload-icon" style="background:#fee2e2">📄</div>
+              <span class="phone-upload-label">Anti-Doping Policy</span>
+              <span class="phone-upload-status" style="color:#b91c1c">⚠ Missing</span>
+            </div>
+          </div>
+          <div style="background:#fef3c7;border-radius:6px;padding:6px 8px;font-size:.55rem;color:#78350f;margin-bottom:8px">⚡ 3 documents still required before you can submit for review</div>
+          <div class="phone-btn" style="opacity:.5">Submit for NOCSL Review</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone 2: Submission Confirmed -->
+  <div>
+    <div style="font-size:.68rem;font-weight:700;color:#1F4E79;margin-bottom:6px;text-align:center">All Documents Submitted</div>
+    <div class="phone-frame">
+      <div class="phone-notch"><div class="phone-notch-dot"></div></div>
+      <div class="phone-status"><span>10:22 AM</span><span>●●● 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="phone-app-hdr" style="background:linear-gradient(135deg,#059669,#15803d)">
+          <div class="phone-app-hdr-icon">✓</div>
+          <div><div class="phone-app-hdr-title">Documents Submitted</div><div class="phone-app-hdr-sub">SL Athletics · Pending AI Analysis</div></div>
+        </div>
+        <div class="phone-body">
+          <div style="text-align:center;padding:12px 0 8px">
+            <div style="font-size:1.8rem;margin-bottom:4px">📬</div>
+            <div style="font-size:.7rem;font-weight:800;color:#15803d">All 8 documents uploaded</div>
+            <div style="font-size:.58rem;color:#64748b;margin-top:2px">Submitted: 21 May 2026, 10:22 AM</div>
+          </div>
+          <div class="phone-card">
+            <div class="phone-card-title">What happens next?</div>
+            <div style="font-size:.57rem;color:#475569;line-height:1.6">
+              <div style="margin-bottom:4px">🤖 <strong>Step 1:</strong> AI Rule Engine analyses your documents (~2 hours)</div>
+              <div style="margin-bottom:4px">📋 <strong>Step 2:</strong> NOCSL Committee reviews AI recommendations (~2 business days)</div>
+              <div>✅ <strong>Step 3:</strong> Approved scores published to governance benchmark</div>
+            </div>
+          </div>
+          <div style="background:#f0fdf4;border-radius:6px;padding:7px 9px;font-size:.57rem;color:#15803d;margin-top:6px">You'll receive a push notification when your scores are approved or if any documents require revision.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description panel -->
+  <div style="flex:1;min-width:220px;padding-top:26px">
+    <div style="font-size:.72rem;font-weight:700;color:#1F4E79;margin-bottom:10px">What the Mobile App Handles</div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="background:#f0fdf4;border-radius:7px;padding:9px 11px;font-size:.65rem;color:#166534;border:1px solid #bbf7d0"><strong>Document Checklist:</strong> The app shows exactly which documents are required for each of the 8 governance dimensions — no ambiguity about what to submit.</div>
+      <div style="background:#eff6ff;border-radius:7px;padding:9px 11px;font-size:.65rem;color:#1e3a5f;border:1px solid #bfdbfe"><strong>Camera &amp; File Upload:</strong> Officers can photograph physical documents with their phone camera or upload PDF files directly from their device storage or cloud drive.</div>
+      <div style="background:#fef3c7;border-radius:7px;padding:9px 11px;font-size:.65rem;color:#78350f;border:1px solid #fde68a"><strong>Submission Blocking:</strong> The Submit button is locked until all required documents are present — preventing incomplete submissions from entering the review pipeline.</div>
+      <div style="background:#faf5ff;border-radius:7px;padding:9px 11px;font-size:.65rem;color:#4c1d95;border:1px solid #e9d5ff"><strong>Status Tracking:</strong> Officers see real-time status — Uploaded → Under Analysis → Under Review → Approved/Revision Required — with push notifications at each stage.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Stage 2: Rule Engine -->
+<h3>Stage 2 — AI Rule Engine: Document Analysis &amp; Score Recommendation</h3>
+<p>Once documents are submitted, the SLSIE rule engine automatically processes each file. It extracts key data points — dates, figures, names, policy clauses — and compares them against the gazette requirements and governance scoring rubric. The engine outputs a recommended score per dimension with a confidence percentage and the specific evidence it used to reach that recommendation.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/governance/review/slca-2025 — Rule Engine Analysis Panel</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
+      <div style="background:linear-gradient(90deg,#1d4ed8,#7c3aed);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:.75rem;font-weight:800">🤖 AI Rule Engine — Document Analysis Complete</div>
+          <div style="font-size:.6rem;opacity:.8;margin-top:2px">SL Athletics · 8 documents processed · Analysis completed 21 May 2026, 12:14 PM</div>
+        </div>
+        <span style="background:rgba(255,255,255,.2);padding:3px 10px;border-radius:8px;font-size:.6rem">Awaiting Human Approval</span>
+      </div>
+      <div style="padding:12px">
+        <div style="font-size:.68rem;font-weight:700;color:#1F4E79;margin-bottom:8px">AI-Recommended Governance Scores — SL Athletics 2025</div>
+        <table class="mini-table" style="margin-bottom:12px">
+          <thead><tr><th>Dimension</th><th>Document Analysed</th><th>Key Finding</th><th>Confidence</th><th>Recommended Score</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Board Composition</strong></td>
+              <td>AGM Minutes, EC Election Records</td>
+              <td style="font-size:.58rem;color:#15803d">AGM held 14 Mar 2025. 9-member EC elected. 3 female members (33%). Term limits verified — all within 8 years.</td>
+              <td><div class="load-bar" style="width:60px"><div class="load-fill" style="width:92%;background:#22c55e"></div></div> 92%</td>
+              <td><span style="font-size:.85rem;font-weight:800;color:#15803d">4.5</span> / 5.0</td>
+            </tr>
+            <tr>
+              <td><strong>Financial Transparency</strong></td>
+              <td>Audited Financial Statements 2024</td>
+              <td style="font-size:.58rem;color:#15803d">Audited accounts signed by A.T. Fernando &amp; Co. (chartered accountants). Submitted within deadline. Revenue LKR 18.4M disclosed. No material discrepancies.</td>
+              <td><div class="load-bar" style="width:60px"><div class="load-fill" style="width:96%;background:#22c55e"></div></div> 96%</td>
+              <td><span style="font-size:.85rem;font-weight:800;color:#15803d">4.7</span> / 5.0</td>
+            </tr>
+            <tr>
+              <td><strong>Strategic Planning</strong></td>
+              <td>Strategic Plan 2025–2027</td>
+              <td style="font-size:.58rem;color:#15803d">4-year plan in force. KPIs defined for athlete development, membership, and international competition. Aligned with NOCSL national sports policy.</td>
+              <td><div class="load-bar" style="width:60px"><div class="load-fill" style="width:88%;background:#22c55e"></div></div> 88%</td>
+              <td><span style="font-size:.85rem;font-weight:800;color:#15803d">4.3</span> / 5.0</td>
+            </tr>
+            <tr>
+              <td><strong>Integrity &amp; Risk</strong></td>
+              <td>Anti-Doping Policy, Code of Conduct</td>
+              <td style="font-size:.58rem;color:#b45309">Anti-doping policy present and current. No whistle-blower mechanism documented. Code of conduct lacks conflict-of-interest declaration procedure.</td>
+              <td><div class="load-bar" style="width:60px"><div class="load-fill" style="width:74%;background:#f59e0b"></div></div> 74%</td>
+              <td><span style="font-size:.85rem;font-weight:800;color:#b45309">3.6</span> / 5.0</td>
+            </tr>
+            <tr>
+              <td><strong>Safeguarding</strong></td>
+              <td>Safeguarding Policy Document</td>
+              <td style="font-size:.58rem;color:#b45309">Child protection policy present. No evidence of coach DBS/vetting process documented. Safe Sport training for officers not referenced.</td>
+              <td><div class="load-bar" style="width:60px"><div class="load-fill" style="width:68%;background:#f59e0b"></div></div> 68%</td>
+              <td><span style="font-size:.85rem;font-weight:800;color:#b45309">3.2</span> / 5.0</td>
+            </tr>
+            <tr>
+              <td><strong>Digital Governance</strong></td>
+              <td>No document submitted</td>
+              <td style="font-size:.58rem;color:#b91c1c">No digital governance or data privacy policy uploaded. Unable to score. Minimum score applied.</td>
+              <td><div class="load-bar" style="width:60px"><div class="load-fill" style="width:20%;background:#ef4444"></div></div> 20%</td>
+              <td><span style="font-size:.85rem;font-weight:800;color:#b91c1c">1.5</span> / 5.0</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:flex;gap:10px;align-items:center;background:#f8faff;border-radius:8px;padding:10px 12px">
+          <div style="font-size:.7rem;color:#64748b"><strong>Overall Recommended Score:</strong></div>
+          <div style="font-size:1.3rem;font-weight:900;color:#1F4E79">4.05</div>
+          <div style="font-size:.6rem;color:#64748b">/ 5.0</div>
+          <div style="flex:1"></div>
+          <span style="background:#fef3c7;color:#b45309;font-size:.62rem;font-weight:700;padding:3px 10px;border-radius:8px">🟡 Pending NOCSL Approval</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stage 3: Human Approval -->
+<h3>Stage 3 — NOCSL Committee Member: Human-in-Loop Approval</h3>
+<p>After the AI rule engine completes its analysis, the governance submission enters the human review queue. A designated NOCSL Olympic Committee member assigned to governance oversight receives a notification, reviews the uploaded documents alongside the AI recommendations, can override individual dimension scores if the AI assessment appears incorrect, and either approves the final scores or returns the submission to the federation for revision.</p>
+
+<div class="preview-wrap">
+  <div class="preview-bar">
+    <div class="preview-dot" style="background:#ff5f57"></div>
+    <div class="preview-dot" style="background:#febc2e"></div>
+    <div class="preview-dot" style="background:#28c840"></div>
+    <span class="preview-url">slsie.onrender.com/app#/governance/approvals — Committee Member Approval Panel</span>
+  </div>
+  <div style="padding:14px;background:#f8fafc">
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:10px">
+      <!-- Left: Pending approvals list -->
+      <div>
+        <div style="background:#1F4E79;color:#fff;padding:8px 10px;border-radius:8px 8px 0 0;font-size:.65rem;font-weight:700">Pending Approvals (3)</div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px">
+          <div style="padding:8px 10px;border-bottom:1px solid #f1f5f9;background:#eff6ff;cursor:pointer">
+            <div style="font-size:.65rem;font-weight:700;color:#1F4E79">SL Athletics</div>
+            <div style="font-size:.55rem;color:#64748b;margin-top:2px">AI Score: 4.05 · 8 docs · Submitted 21 May</div>
+            <span style="background:#fef3c7;color:#b45309;font-size:.5rem;padding:1px 6px;border-radius:5px;font-weight:700;margin-top:3px;display:inline-block">Under Review</span>
+          </div>
+          <div style="padding:8px 10px;border-bottom:1px solid #f1f5f9;cursor:pointer">
+            <div style="font-size:.65rem;font-weight:700;color:#334155">SL Badminton</div>
+            <div style="font-size:.55rem;color:#64748b;margin-top:2px">AI Score: 4.10 · 7 docs · Submitted 19 May</div>
+            <span style="background:#f1f5f9;color:#64748b;font-size:.5rem;padding:1px 6px;border-radius:5px;font-weight:700;margin-top:3px;display:inline-block">Not Started</span>
+          </div>
+          <div style="padding:8px 10px;cursor:pointer">
+            <div style="font-size:.65rem;font-weight:700;color:#334155">SL Swimming</div>
+            <div style="font-size:.55rem;color:#64748b;margin-top:2px">AI Score: 3.40 · 5 docs · Submitted 18 May</div>
+            <span style="background:#fee2e2;color:#b91c1c;font-size:.5rem;padding:1px 6px;border-radius:5px;font-weight:700;margin-top:3px;display:inline-block">Needs Revision</span>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Review panel -->
+      <div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">
+          <div style="padding:8px 12px;border-bottom:1px solid #f1f5f9;background:#f8faff;display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:.68rem;font-weight:700;color:#1F4E79">SL Athletics — Reviewing AI Recommendation</div>
+            <div style="font-size:.58rem;color:#64748b">Reviewer: Mrs. K. Rajapaksa · NOCSL Governance Officer</div>
+          </div>
+          <div style="padding:10px 12px">
+            <div style="font-size:.62rem;color:#64748b;margin-bottom:8px;font-style:italic">Review each dimension. Override the AI score if needed. Your final decision will be published to the governance benchmark.</div>
+            <table class="mini-table" style="margin-bottom:10px">
+              <thead><tr><th>Dimension</th><th>AI Score</th><th>Reviewer Override</th><th>Reviewer Note</th></tr></thead>
+              <tbody>
+                <tr><td>Board Composition</td><td><strong style="color:#15803d">4.5</strong></td><td><div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 6px;font-size:.6rem;color:#1d4ed8;display:inline-block">4.5 — Accept ✓</div></td><td style="font-size:.55rem;color:#64748b">—</td></tr>
+                <tr><td>Financial Transparency</td><td><strong style="color:#15803d">4.7</strong></td><td><div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 6px;font-size:.6rem;color:#1d4ed8;display:inline-block">4.7 — Accept ✓</div></td><td style="font-size:.55rem;color:#64748b">—</td></tr>
+                <tr><td>Safeguarding</td><td><strong style="color:#b45309">3.2</strong></td><td><div style="background:#dcfce7;border:1px solid #bbf7d0;border-radius:4px;padding:2px 6px;font-size:.6rem;color:#15803d;display:inline-block">3.8 — Override ✏</div></td><td style="font-size:.55rem;color:#475569">Verbal briefing at NOCSL safeguarding workshop confirms coach vetting is in place — not yet documented in policy.</td></tr>
+                <tr><td>Digital Governance</td><td><strong style="color:#b91c1c">1.5</strong></td><td><div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 6px;font-size:.6rem;color:#1d4ed8;display:inline-block">1.5 — Accept ✓</div></td><td style="font-size:.55rem;color:#64748b">Requested federation to submit digital policy by 30 Jun.</td></tr>
+              </tbody>
+            </table>
+            <div style="background:#f8faff;border-radius:7px;padding:9px 11px;display:flex;align-items:center;gap:12px;margin-bottom:10px">
+              <div><div style="font-size:.6rem;color:#64748b">Final Approved Score</div><div style="font-size:1.4rem;font-weight:900;color:#1F4E79">4.18 <span style="font-size:.6rem;color:#64748b">/ 5.0</span></div></div>
+              <div style="flex:1;font-size:.6rem;color:#64748b;line-height:1.5">AI recommended 4.05. After review, Safeguarding upgraded from 3.2 → 3.8 based on supplementary evidence. All other scores accepted.</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;background:#15803d;color:#fff;text-align:center;padding:7px;border-radius:7px;font-size:.65rem;font-weight:700;cursor:pointer">✓ Approve &amp; Publish Score</div>
+              <div style="background:#fff;border:1.5px solid #e2e8f0;color:#475569;text-align:center;padding:7px;border-radius:7px;font-size:.65rem;font-weight:700;cursor:pointer;min-width:90px">↩ Request Revision</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="biz-box">
+  <h4>✅ Business Value of the Validation Workflow</h4>
+  <ul>
+    <li><strong>Eliminates self-reported score inflation</strong> — federations cannot award themselves high scores; every score requires documentary evidence that the rule engine validates</li>
+    <li><strong>Consistent, auditable scoring</strong> — the rule engine applies the same criteria to every federation, removing subjectivity and bias from the assessment process</li>
+    <li><strong>Human accountability</strong> — the committee member approval step ensures a qualified person is responsible for every published score, with their identity and override reasoning logged permanently</li>
+    <li><strong>Faster turnaround</strong> — AI pre-analysis reduces committee review time from hours to minutes per federation; human reviewers only need to verify, not read and score from scratch</li>
+    <li><strong>Complete evidence trail</strong> — every published score is backed by stored documents, AI analysis output, and reviewer decision — defensible in any governance audit or legal challenge</li>
+    <li><strong>Mobile-first for federations</strong> — removing the need for federations to log into a desktop system dramatically increases submission compliance, particularly for smaller federations with limited IT capacity</li>
   </ul>
 </div>
 
@@ -1090,6 +1420,312 @@ table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
     <li>Donor Impact Report and Fit for Life Report are generated instantly from live data — eliminating 2–3 weeks of manual data compilation before each donor review</li>
     <li>Digital evidence trail enables NOCSL to defend programme effectiveness to Ministry and justify continued funding requests</li>
     <li>Wellbeing and sleep data go beyond standard physical health metrics — aligning with IOC's holistic athlete and participant welfare agenda</li>
+  </ul>
+</div>
+
+<!-- ─── FIT FOR LIFE: MOBILE HEALTH SYNC ─── -->
+<div class="page-break"></div>
+<h3 style="font-size:1.1rem;color:#1F4E79;margin:0 0 10px;border-bottom:2px solid #2E75B6;padding-bottom:6px;">Fit for Life — Mobile Health Data Sync (Apple Health, Google Fit &amp; Wearables)</h3>
+
+<div class="info-box" style="margin-bottom:18px;">
+  <strong>Requirement:</strong> In addition to manual data entry, the SLSIE mobile app must be able to synchronise directly with participants' mobile health platforms and fitness wearables — automatically pulling steps, heart rate, sleep hours, active calories, and other health metrics into the platform without requiring manual input. This eliminates reporting burden on coaches and participants while producing more accurate, continuous health data.
+</div>
+
+<div class="workflow-steps" style="margin-bottom:24px;">
+  <div class="wf-step" style="border-radius:10px 0 0 10px;">
+    <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:4px;">Stage 1</div>
+    <div style="font-size:.78rem;font-weight:800;color:#1F4E79;margin-bottom:6px;">📱 Connect Device</div>
+    <div style="font-size:.7rem;color:#475569;line-height:1.5;">Participant opens SLSIE mobile app and connects Apple Health, Google Fit, Fitbit, Samsung Health, or Garmin with one tap</div>
+  </div>
+  <div class="wf-arrow">▶</div>
+  <div class="wf-step">
+    <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:4px;">Stage 2</div>
+    <div style="font-size:.78rem;font-weight:800;color:#1F4E79;margin-bottom:6px;">🔄 Auto Sync</div>
+    <div style="font-size:.7rem;color:#475569;line-height:1.5;">Platform pulls daily health metrics automatically — steps, resting heart rate, sleep, active calories, VO₂ max, HRV — no manual entry needed</div>
+  </div>
+  <div class="wf-arrow">▶</div>
+  <div class="wf-step" style="border-radius:0 10px 10px 0;">
+    <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:4px;">Stage 3</div>
+    <div style="font-size:.78rem;font-weight:800;color:#1F4E79;margin-bottom:6px;">📊 Live in Dashboard</div>
+    <div style="font-size:.7rem;color:#475569;line-height:1.5;">Data appears instantly in coach &amp; NOCSL dashboards with a sync badge, feeding Fit for Life KPI reports and IOC compliance tracking in real time</div>
+  </div>
+</div>
+
+<!-- Phone mockups row -->
+<p style="font-size:.78rem;font-weight:700;color:#1F4E79;margin-bottom:10px;">📱 Mobile App — Demo Screenshots</p>
+<div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;margin-bottom:24px;">
+
+  <!-- Phone 1: Device connection screen -->
+  <div>
+    <div style="font-size:.68rem;color:#64748b;text-align:center;margin-bottom:6px;">Screen 1 — Connect Health Devices</div>
+    <div class="phone-frame" style="width:200px;">
+      <div class="phone-notch"><div style="width:44px;height:5px;background:#374151;border-radius:3px;"></div></div>
+      <div class="phone-screen">
+        <div class="phone-app-hdr" style="padding:8px 12px;">
+          <div style="font-size:.55rem;opacity:.75;">SLSIE · Fit for Life</div>
+          <div style="font-size:.78rem;font-weight:800;">Health Device Sync</div>
+        </div>
+        <div class="phone-body" style="padding:10px 12px;">
+          <div style="font-size:.6rem;color:#64748b;margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Connected Devices</div>
+
+          <div class="device-row">
+            <div style="font-size:.85rem;">🍎</div>
+            <div style="flex:1;">
+              <div style="font-size:.65rem;font-weight:700;color:#1e293b;">Apple Health</div>
+              <div style="font-size:.58rem;color:#64748b;">Steps · HR · Sleep · Calories</div>
+            </div>
+            <div class="device-status ds-conn">✓ Connected</div>
+          </div>
+
+          <div class="device-row">
+            <div style="font-size:.85rem;">🏃</div>
+            <div style="flex:1;">
+              <div style="font-size:.65rem;font-weight:700;color:#1e293b;">Google Fit</div>
+              <div style="font-size:.58rem;color:#64748b;">Steps · Active Min · Heart Points</div>
+            </div>
+            <div class="device-status ds-conn">✓ Connected</div>
+          </div>
+
+          <div class="device-row">
+            <div style="font-size:.85rem;">⌚</div>
+            <div style="flex:1;">
+              <div style="font-size:.65rem;font-weight:700;color:#1e293b;">Fitbit</div>
+              <div style="font-size:.58rem;color:#64748b;">Steps · Sleep · SpO₂ · HRV</div>
+            </div>
+            <div class="device-status" style="background:#fef9c3;color:#92400e;font-size:.52rem;padding:1px 6px;border-radius:8px;font-weight:700;">⏳ Pending</div>
+          </div>
+
+          <div class="device-row" style="border-bottom:none;">
+            <div style="font-size:.85rem;">📡</div>
+            <div style="flex:1;">
+              <div style="font-size:.65rem;font-weight:700;color:#1e293b;">Samsung Health</div>
+              <div style="font-size:.58rem;color:#64748b;">Steps · Stress · Body Comp</div>
+            </div>
+            <div class="device-status" style="background:#f1f5f9;color:#64748b;font-size:.52rem;padding:1px 6px;border-radius:8px;font-weight:700;">+ Connect</div>
+          </div>
+
+          <div style="margin-top:10px;font-size:.6rem;color:#64748b;margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Wearables</div>
+
+          <div class="device-row">
+            <div style="font-size:.85rem;">🟢</div>
+            <div style="flex:1;">
+              <div style="font-size:.65rem;font-weight:700;color:#1e293b;">Garmin Connect</div>
+              <div style="font-size:.58rem;color:#64748b;">VO₂ Max · Training Load · GPS</div>
+            </div>
+            <div class="device-status ds-conn">✓ Connected</div>
+          </div>
+
+          <div style="margin-top:12px;background:#1F4E79;color:#fff;border-radius:7px;text-align:center;padding:7px;font-size:.65rem;font-weight:800;">+ Add New Device</div>
+          <div style="margin-top:6px;font-size:.55rem;color:#64748b;text-align:center;">Last sync: Today 08:45 AM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone 2: Auto-synced health summary -->
+  <div>
+    <div style="font-size:.68rem;color:#64748b;text-align:center;margin-bottom:6px;">Screen 2 — Auto-Synced Health Summary</div>
+    <div class="phone-frame" style="width:200px;">
+      <div class="phone-notch"><div style="width:44px;height:5px;background:#374151;border-radius:3px;"></div></div>
+      <div class="phone-screen">
+        <div class="phone-app-hdr" style="padding:8px 12px;">
+          <div style="font-size:.55rem;opacity:.75;">Nirmala W. · Volleyball · Western</div>
+          <div style="font-size:.78rem;font-weight:800;">Today's Health Data</div>
+          <div style="font-size:.52rem;opacity:.75;margin-top:2px;">🔄 Auto-synced · 08:45 AM</div>
+        </div>
+        <div class="phone-body" style="padding:10px 12px;">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;">
+            <div class="phone-card" style="padding:8px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">
+              <div style="font-size:.58rem;color:#15803d;font-weight:700;">👟 Steps</div>
+              <div style="font-size:.95rem;font-weight:800;color:#14532d;">8,420</div>
+              <div style="font-size:.52rem;color:#64748b;">Goal: 10,000</div>
+              <div style="background:#d1fae5;border-radius:3px;height:4px;margin-top:3px;"><div style="background:#22c55e;width:84%;height:100%;border-radius:3px;"></div></div>
+            </div>
+            <div class="phone-card" style="padding:8px;background:#fff7ed;border-radius:8px;border:1px solid #fed7aa;">
+              <div style="font-size:.58rem;color:#c2410c;font-weight:700;">❤️ Resting HR</div>
+              <div style="font-size:.95rem;font-weight:800;color:#7c2d12;">62 <span style="font-size:.55rem;font-weight:400;">bpm</span></div>
+              <div style="font-size:.52rem;color:#64748b;">Normal range</div>
+              <div style="font-size:.52rem;color:#15803d;margin-top:2px;">▼ from 65 bpm</div>
+            </div>
+            <div class="phone-card" style="padding:8px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">
+              <div style="font-size:.58rem;color:#1d4ed8;font-weight:700;">🌙 Sleep</div>
+              <div style="font-size:.95rem;font-weight:800;color:#1e3a5f;">7.5 <span style="font-size:.55rem;font-weight:400;">hrs</span></div>
+              <div style="font-size:.52rem;color:#64748b;">Deep: 1.8h · REM: 2.1h</div>
+            </div>
+            <div class="phone-card" style="padding:8px;background:#fdf4ff;border-radius:8px;border:1px solid #e9d5ff;">
+              <div style="font-size:.58rem;color:#7e22ce;font-weight:700;">🔥 Active Cal</div>
+              <div style="font-size:.95rem;font-weight:800;color:#581c87;">485 <span style="font-size:.55rem;font-weight:400;">kcal</span></div>
+              <div style="font-size:.52rem;color:#64748b;">Active mins: 52</div>
+            </div>
+          </div>
+
+          <div style="background:#f8fafc;border-radius:8px;padding:8px;border:1px solid #e2e8f0;margin-bottom:8px;">
+            <div style="font-size:.58rem;font-weight:700;color:#1F4E79;margin-bottom:5px;">📈 Weekly Trend (Apple Watch)</div>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:32px;">
+              <div style="flex:1;background:#bfdbfe;border-radius:2px 2px 0 0;" title="Mon" style="height:60%;"></div>
+              <div style="width:14px;background:#bfdbfe;border-radius:2px 2px 0 0;height:70%;"></div>
+              <div style="width:14px;background:#93c5fd;border-radius:2px 2px 0 0;height:55%;"></div>
+              <div style="width:14px;background:#60a5fa;border-radius:2px 2px 0 0;height:80%;"></div>
+              <div style="width:14px;background:#3b82f6;border-radius:2px 2px 0 0;height:75%;"></div>
+              <div style="width:14px;background:#2563eb;border-radius:2px 2px 0 0;height:84%;"></div>
+              <div style="width:14px;background:#1d4ed8;border-radius:2px 2px 0 0;height:90%;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.48rem;color:#94a3b8;margin-top:2px;"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+          </div>
+
+          <div style="background:#dcfce7;border-radius:7px;padding:6px 8px;font-size:.6rem;color:#15803d;font-weight:700;text-align:center;">✅ All data auto-synced — no manual entry needed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Web dashboard preview -->
+  <div style="flex:1;min-width:280px;">
+    <div style="font-size:.68rem;color:#64748b;margin-bottom:6px;font-weight:600;">🖥 SLSIE Web Dashboard — Participant Health Profile (Auto-populated)</div>
+    <div style="border:1.5px solid #e2e8f0;border-radius:10px;overflow:hidden;font-size:.72rem;background:#fff;">
+      <!-- Dashboard header -->
+      <div style="background:linear-gradient(135deg,#1F4E79,#2E75B6);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:.62rem;opacity:.75;">Fit for Life · Participant Profile</div>
+          <div style="font-size:.85rem;font-weight:800;">Nirmala Wickramasinghe</div>
+          <div style="font-size:.6rem;opacity:.8;">Volleyball · Western Province · Age 24</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="background:rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;font-size:.6rem;font-weight:700;">🔄 Live Sync Active</div>
+          <div style="font-size:.55rem;opacity:.7;margin-top:3px;">Apple Watch + Garmin</div>
+        </div>
+      </div>
+      <!-- Health metrics table -->
+      <div style="padding:12px 14px;">
+        <div style="font-size:.62rem;font-weight:700;color:#1F4E79;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;">This Month's Health Metrics</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.68rem;margin-bottom:12px;">
+          <thead>
+            <tr style="background:#f1f5f9;">
+              <th style="padding:5px 8px;text-align:left;color:#475569;font-weight:700;border:1px solid #e2e8f0;">Metric</th>
+              <th style="padding:5px 8px;text-align:center;color:#475569;font-weight:700;border:1px solid #e2e8f0;">Avg / Day</th>
+              <th style="padding:5px 8px;text-align:center;color:#475569;font-weight:700;border:1px solid #e2e8f0;">Target</th>
+              <th style="padding:5px 8px;text-align:center;color:#475569;font-weight:700;border:1px solid #e2e8f0;">Status</th>
+              <th style="padding:5px 8px;text-align:center;color:#475569;font-weight:700;border:1px solid #e2e8f0;">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;font-weight:600;">Daily Steps</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;font-weight:700;color:#15803d;">8,214</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;">10,000</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#fef9c3;color:#92400e;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">82% ↑</span></td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">🍎 Auto</span></td>
+            </tr>
+            <tr style="background:#f8fafc;">
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;font-weight:600;">Resting Heart Rate</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;font-weight:700;color:#15803d;">63 bpm</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;">&lt;70 bpm</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">✓ Good</span></td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">⌚ Auto</span></td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;font-weight:600;">Sleep Duration</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;font-weight:700;color:#1d4ed8;">7.2 hrs</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;">7–9 hrs</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">✓ Good</span></td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">🍎 Auto</span></td>
+            </tr>
+            <tr style="background:#f8fafc;">
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;font-weight:600;">Active Calories</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;font-weight:700;">462 kcal</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;">500 kcal</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#fef9c3;color:#92400e;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">92% ↑</span></td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">⌚ Auto</span></td>
+            </tr>
+            <tr>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;font-weight:600;">VO₂ Max</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;font-weight:700;color:#7e22ce;">44.2 ml/kg</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;">&gt;40</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">✓ Excellent</span></td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#ede9fe;color:#6d28d9;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">🟢 Auto</span></td>
+            </tr>
+            <tr style="background:#f8fafc;">
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;font-weight:600;">Wellbeing Score</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;font-weight:700;color:#15803d;">8.1 / 10</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;">&gt;7.0</td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#dcfce7;color:#15803d;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">✓ Good</span></td>
+              <td style="padding:5px 8px;border:1px solid #e2e8f0;text-align:center;"><span style="background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:8px;font-size:.58rem;font-weight:700;">✏️ Manual</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="background:#eff6ff;border-radius:7px;padding:8px 10px;font-size:.65rem;color:#1e3a5f;border-left:3px solid #2E75B6;">
+          <strong>🔄 Sync Legend:</strong> &nbsp;
+          <span style="background:#dcfce7;color:#15803d;padding:1px 7px;border-radius:8px;font-size:.6rem;font-weight:700;margin-right:6px;">🍎 Auto</span> Apple Health &nbsp;
+          <span style="background:#dcfce7;color:#15803d;padding:1px 7px;border-radius:8px;font-size:.6rem;font-weight:700;margin-right:6px;">⌚ Auto</span> Wearable &nbsp;
+          <span style="background:#ede9fe;color:#6d28d9;padding:1px 7px;border-radius:8px;font-size:.6rem;font-weight:700;margin-right:6px;">🟢 Auto</span> Garmin &nbsp;
+          <span style="background:#fef3c7;color:#92400e;padding:1px 7px;border-radius:8px;font-size:.6rem;font-weight:700;">✏️ Manual</span> Coach entered
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Supported integrations table -->
+<p style="font-size:.78rem;font-weight:700;color:#1F4E79;margin:20px 0 8px;">📡 Supported Health Platform Integrations</p>
+<table style="width:100%;border-collapse:collapse;font-size:.75rem;margin-bottom:20px;">
+  <thead>
+    <tr style="background:#1F4E79;color:#fff;">
+      <th style="padding:8px 10px;text-align:left;">Platform / Device</th>
+      <th style="padding:8px 10px;text-align:left;">Data Types Synced</th>
+      <th style="padding:8px 10px;text-align:center;">Sync Method</th>
+      <th style="padding:8px 10px;text-align:center;">Frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;font-weight:600;">🍎 Apple Health (HealthKit)</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;">Steps, Resting HR, Sleep (stages), Active Calories, HRV, Blood Oxygen (SpO₂), Mindful Minutes</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">iOS Background Sync</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Every 15 min</td>
+    </tr>
+    <tr style="background:#f8fafc;">
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;font-weight:600;">🤖 Google Fit</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;">Steps, Active Minutes, Heart Points, Move Minutes, Distance, Calories Expended</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">OAuth 2.0 API</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Every 30 min</td>
+    </tr>
+    <tr>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;font-weight:600;">⌚ Fitbit</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;">Steps, Sleep Score, SpO₂, HRV, Skin Temperature, Stress Management Score</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Fitbit Web API</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Hourly</td>
+    </tr>
+    <tr style="background:#f8fafc;">
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;font-weight:600;">🟢 Garmin Connect</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;">VO₂ Max, Training Status, Training Load, Recovery Time, Body Battery, GPS Activity</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Garmin Health API</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Post-activity</td>
+    </tr>
+    <tr>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;font-weight:600;">📱 Samsung Health</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;">Steps, Heart Rate, Sleep, Stress, Body Composition (body fat %, muscle mass)</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Samsung Health SDK</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Every 30 min</td>
+    </tr>
+    <tr style="background:#f8fafc;">
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;font-weight:600;">📲 SLSIE Manual Entry</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;">Wellbeing Score (1–10), Mood, Pain / Soreness, Nutrition notes — fields not available from wearables</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">Coach / Participant App</td>
+      <td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center;">On demand</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="biz-box">
+  <h4>✅ Business Value — Mobile Health Sync</h4>
+  <ul>
+    <li>Eliminates the single biggest barrier to Fit for Life data quality — manual entry burden on coaches and participants which leads to missing, delayed, or inaccurate records</li>
+    <li>Continuous 24/7 health monitoring replaces weekly snapshot check-ins — enabling earlier detection of overtraining, poor recovery, and wellbeing decline at the programme level</li>
+    <li>Wearable data (VO₂ max, HRV, recovery scores) feeds directly into ACWR injury risk calculations — combining training load data with real-time recovery status for more precise risk alerts</li>
+    <li>Participants in remote provinces without dedicated coaches can still contribute health data automatically — closing the geographic equity gap in Fit for Life data collection</li>
+    <li>IOC Fit for Life 2025–2035 reporting requires verified, consistent health outcome data across all provinces — auto-sync from consumer devices provides audit-ready, timestamped evidence at no additional cost</li>
+    <li>The hybrid model (auto-sync + manual entry) is inclusive by design — participants without smartphones or wearables can still enter data manually, while those with devices get zero-effort tracking</li>
   </ul>
 </div>
 
@@ -1738,117 +2374,9 @@ table.rtable tbody tr:nth-child(even) td { background:#f8faff; }
   </ul>
 </div>
 
-<!-- ─── 12 TECH ─── -->
-<div class="page-break"></div>
-<div class="section-num">Section 12</div>
-<h2>Production System Architecture</h2>
-
-<p>The current SLSIE platform is a fully functional proof-of-concept that demonstrates the complete feature set. The production system — designed to serve all 34 federations, hundreds of athletes, and multiple concurrent government users reliably — requires a scaled, enterprise-grade architecture. This section describes how SLSIE would be built for full national deployment.</p>
-
-<div class="info-box">
-  <strong>Design Principle:</strong> The production architecture is designed around three requirements — (1) <strong>reliability</strong>: the system must be available 99.9% of the time including during election periods, Ministry reviews, and international events; (2) <strong>security</strong>: athlete health data and federation governance data are sensitive and must meet Sri Lanka data protection standards; (3) <strong>scalability</strong>: the system must be able to grow from 34 federations to 100+ without re-architecture.
-</div>
-
-<!-- Architecture diagram -->
-<h3>System Architecture Overview</h3>
-<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:20px;margin:12px 0 20px;font-size:.72rem">
-  <!-- Layer 1: Client -->
-  <div style="text-align:center;margin-bottom:8px">
-    <div style="display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center">
-      <div style="background:#1F4E79;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700">🌐 Web Browser</div>
-      <div style="background:#1F4E79;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700">📱 iOS App</div>
-      <div style="background:#1F4E79;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700">📱 Android App</div>
-    </div>
-    <div style="color:#94a3b8;margin:4px 0">↓ HTTPS / TLS 1.3</div>
-  </div>
-  <!-- Layer 2: CDN + WAF -->
-  <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px;text-align:center;margin-bottom:6px">
-    <span style="font-weight:700;color:#1d4ed8">CDN (CloudFront / Azure CDN)</span> &nbsp;+&nbsp; <span style="font-weight:700;color:#1d4ed8">WAF — Web Application Firewall</span>
-    <div style="font-size:.62rem;color:#475569;margin-top:3px">Static asset caching · DDoS protection · Rate limiting · Bot filtering</div>
-  </div>
-  <div style="color:#94a3b8;text-align:center;margin:3px 0">↓</div>
-  <!-- Layer 3: Load Balancer -->
-  <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:8px;text-align:center;margin-bottom:6px">
-    <span style="font-weight:700;color:#1d4ed8">Load Balancer (AWS ALB / Azure Load Balancer)</span>
-    <div style="font-size:.62rem;color:#475569;margin-top:3px">Distributes traffic across API server instances · Health checks · Auto-scaling triggers</div>
-  </div>
-  <div style="color:#94a3b8;text-align:center;margin:3px 0">↓</div>
-  <!-- Layer 4: Application servers -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
-    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#15803d;margin-bottom:4px">⚙️ Frontend Server (React / Next.js)</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">Server-side rendered pages · Role-based routing · Offline-capable PWA · Mobile-responsive · Auto-scales to 2–10 instances</div>
-    </div>
-    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#15803d;margin-bottom:4px">🔌 API Server (Node.js / Express)</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">REST API endpoints · JWT authentication · Role-based access middleware · Report generation · AI integration layer · Auto-scales to 2–8 instances</div>
-    </div>
-  </div>
-  <div style="color:#94a3b8;text-align:center;margin:3px 0">↓</div>
-  <!-- Layer 5: Data + AI -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">
-    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#b45309;margin-bottom:4px">🗃️ PostgreSQL Database</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">Primary RDBMS · Multi-region replication · Automated daily backups · Managed service (AWS RDS / Azure Database)</div>
-    </div>
-    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#b45309;margin-bottom:4px">⚡ Redis Cache</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">Session management · API response caching · Real-time notifications · Rate limiting counters</div>
-    </div>
-    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#b45309;margin-bottom:4px">🤖 Anthropic Claude API</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">Chatbot · Athlete coaching insights · Federation governance analysis · Report narrative generation</div>
-    </div>
-  </div>
-  <!-- Layer 6: Storage + Integrations -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-    <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#7c3aed;margin-bottom:4px">☁️ Object Storage (AWS S3 / Azure Blob)</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">Generated reports (PDF/Word) · Uploaded documents · Static assets · Audit log archives</div>
-    </div>
-    <div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:10px">
-      <div style="font-weight:700;color:#7c3aed;margin-bottom:4px">🔗 External Integrations</div>
-      <div style="font-size:.62rem;color:#475569;line-height:1.5">Ministry of Sports data exchange · IOC reporting API · Email (SendGrid) · SMS alerts (Twilio) · WADA anti-doping interface</div>
-    </div>
-  </div>
-</div>
-
-<h3>Production Technology Stack</h3>
-<table class="rtable">
-  <thead><tr><th>Layer</th><th>Production Technology</th><th>Why This Choice</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Frontend</strong></td><td>React.js + Next.js 14 (SSR)</td><td>Server-side rendering for fast initial load; SEO-ready; component-based for maintainability; strong ecosystem</td></tr>
-    <tr><td><strong>Mobile Apps</strong></td><td>React Native (iOS &amp; Android)</td><td>Single codebase for both platforms; reuses frontend logic; supports offline data collection in provinces with poor connectivity</td></tr>
-    <tr><td><strong>Backend API</strong></td><td>Node.js v22 + Express.js</td><td>Proven for REST APIs; large ecosystem; team expertise matches existing codebase; horizontal scaling via container instances</td></tr>
-    <tr><td><strong>Database</strong></td><td>PostgreSQL 16 (managed)</td><td>Enterprise-grade relational database; ACID compliance; complex query support; row-level security for federation data isolation; 99.99% SLA on managed services</td></tr>
-    <tr><td><strong>Cache / Sessions</strong></td><td>Redis 7 (managed)</td><td>Sub-millisecond session lookups; prevents repeated expensive DB queries; enables real-time notifications</td></tr>
-    <tr><td><strong>Authentication</strong></td><td>JWT + OAuth 2.0</td><td>Stateless authentication scales horizontally; OAuth enables future SSO integration with Ministry of Sports identity systems</td></tr>
-    <tr><td><strong>File Storage</strong></td><td>AWS S3 / Azure Blob Storage</td><td>Unlimited report storage; 11 nines of durability; pre-signed URLs for secure temporary document access</td></tr>
-    <tr><td><strong>AI Engine</strong></td><td>Anthropic Claude 3 Haiku / Sonnet API</td><td>State-of-the-art NLP; structured output support; cost-efficient at NOCSL scale (~$20–50/month at full load)</td></tr>
-    <tr><td><strong>Infrastructure</strong></td><td>Docker containers + Kubernetes (EKS/AKS)</td><td>Container isolation; auto-scaling based on demand; zero-downtime deployments; easy disaster recovery</td></tr>
-    <tr><td><strong>CDN</strong></td><td>AWS CloudFront / Azure CDN</td><td>Sub-100ms asset delivery across Sri Lanka; reduces server load; DDoS protection at network edge</td></tr>
-    <tr><td><strong>CI/CD</strong></td><td>GitHub Actions → Staging → Production</td><td>Every code change automatically tested and deployed; staging environment for user acceptance testing before production release</td></tr>
-    <tr><td><strong>Monitoring</strong></td><td>Datadog / AWS CloudWatch</td><td>Real-time performance metrics; error alerting; uptime monitoring; cost tracking</td></tr>
-  </tbody>
-</table>
-
-<h3>Security Architecture</h3>
-<table class="rtable">
-  <thead><tr><th>Security Layer</th><th>Implementation</th><th>What It Protects</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Transport Security</strong></td><td>TLS 1.3 on all connections; HSTS headers enforced</td><td>All data in transit — prevents eavesdropping on athlete health data and governance records</td></tr>
-    <tr><td><strong>Data Encryption at Rest</strong></td><td>AES-256 on all database columns containing PII; encrypted database volume</td><td>Athlete biometrics, personal details, health records stored securely even if storage is physically compromised</td></tr>
-    <tr><td><strong>Authentication</strong></td><td>JWT tokens (15 min expiry) + refresh tokens; MFA optional for NOCSL Admin and Ministry users</td><td>Prevents unauthorised access even if login credentials are stolen</td></tr>
-    <tr><td><strong>Authorisation</strong></td><td>Row-level security in PostgreSQL; API middleware enforces federation-scoped access</td><td>Federation A cannot query or read Federation B's data — enforced at database level, not just UI</td></tr>
-    <tr><td><strong>Web Application Firewall</strong></td><td>OWASP Top-10 rule set; SQL injection protection; rate limiting (100 req/min per user)</td><td>Automated attacks, scraping, and injection attempts blocked before reaching the application server</td></tr>
-    <tr><td><strong>Audit Logging</strong></td><td>Immutable audit trail: every data write logged with user ID, timestamp, IP address</td><td>Accountability — who changed which federation's compliance record and when; required for gazette legal defence</td></tr>
-    <tr><td><strong>Data Residency</strong></td><td>All data hosted in AWS Asia Pacific (Singapore) or local Sri Lanka data centre</td><td>Compliance with Sri Lanka data sovereignty requirements; data does not leave the region</td></tr>
-  </tbody>
-</table>
-
 <!-- ─── 13 SUMMARY ─── -->
 <div class="page-break"></div>
-<div class="section-num">Section 13</div>
+<div class="section-num">Section 12</div>
 <h2>Business Value Summary</h2>
 
 <table class="rtable">
